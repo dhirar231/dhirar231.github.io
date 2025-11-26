@@ -265,7 +265,7 @@
                 <span class="command-prompt">RZ1#</span> configure terminal<br />
                 <span class="command-prompt">RZ1(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/0</span><br />
+                <span class="command-parameter">FastEthernet0/0</span><br />
                 <span class="command-prompt">RZ1(config-if)#</span>
                 <span class="command-keyword">ip address</span>
                 <span class="command-value">172.24.0.1 255.255.192.0</span
@@ -283,7 +283,7 @@
                 ><br />
                 <span class="command-prompt">RZ1(config-router)#</span>
                 <span class="command-keyword">passive-interface</span>
-                <span class="command-parameter">gigabitethernet0/0</span><br />
+                <span class="command-parameter">FastEthernet0/0</span><br />
                 <span class="command-prompt">RZ1(config-router)#</span>
                 <span class="command-keyword">exit</span>
               </div>
@@ -294,7 +294,7 @@
                 <span class="command-prompt">RZ2#</span> configure terminal<br />
                 <span class="command-prompt">RZ2(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/0</span><br />
+                <span class="command-parameter">FastEthernet0/0</span><br />
                 <span class="command-prompt">RZ2(config-if)#</span>
                 <span class="command-keyword">ip address</span>
                 <span class="command-value">172.24.64.1 255.255.248.0</span
@@ -312,7 +312,7 @@
                 ><br />
                 <span class="command-prompt">RZ2(config-router)#</span>
                 <span class="command-keyword">passive-interface</span>
-                <span class="command-parameter">gigabitethernet0/0</span><br />
+                <span class="command-parameter">FastEthernet0/0</span><br />
                 <span class="command-prompt">RZ2(config-router)#</span>
                 <span class="command-keyword">exit</span>
               </div>
@@ -347,8 +347,7 @@
                 ><br />
                 <span class="command-prompt">RZ2(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/0.20</span
-                ><br />
+                <span class="command-parameter">FastEthernet0/0.20</span><br />
                 <span class="command-prompt">RZ2(config-subif)#</span>
                 <span class="command-keyword">encapsulation dot1Q</span>
                 <span class="command-value">20</span><br />
@@ -385,8 +384,7 @@
                 ><br />
                 <span class="command-prompt">RZ3(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/0.30</span
-                ><br />
+                <span class="command-parameter">FastEthernet0/0.30</span><br />
                 <span class="command-prompt">RZ3(config-subif)#</span>
                 <span class="command-keyword">encapsulation dot1Q</span>
                 <span class="command-value">30</span><br />
@@ -493,7 +491,7 @@
                 <span class="command-prompt">RZ1#</span> configure terminal<br />
                 <span class="command-prompt">RZ1(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/1</span><br />
+                <span class="command-parameter">FastEthernet0/1</span><br />
                 <span class="command-prompt">RZ1(config-if)#</span>
                 <span class="command-keyword">ip address</span>
                 <span class="command-value">dhcp</span><br />
@@ -509,7 +507,7 @@
                 ><br />
                 <span class="command-prompt">RZ1(config)#</span>
                 <span class="command-keyword">interface</span>
-                <span class="command-parameter">gigabitethernet0/0</span><br />
+                <span class="command-parameter">FastEthernet0/0</span><br />
                 <span class="command-prompt">RZ1(config-if)#</span>
                 <span class="command-keyword">ip nat inside</span><br />
                 <span class="command-prompt">RZ1(config-if)#</span>
@@ -531,7 +529,7 @@
                 <span class="command-prompt">RZ1(config)#</span>
                 <span class="command-keyword">ip nat inside source list</span>
                 <span class="command-value"
-                  >1 interface gigabitethernet0/1 overload</span
+                  >1 interface FastEthernet0/1 overload</span
                 ><br />
                 <span class="command-prompt">RZ1(config)#</span>
                 <span class="command-keyword">exit</span>
