@@ -126,7 +126,7 @@ techsolutions-network/
 ### Téléchargement
 
 ```bash
-git clone <repository-url>
+git clone dhirar231.github.io
 cd techsolutions-network
 ```
 
