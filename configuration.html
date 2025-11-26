@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuration Réseau - TechSolutions SARL</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Same CSS as in the main file */
+      :root {
+        --primary: #2c3e50;
+        --secondary: #3498db;
+        --accent: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        --info: #17a2b8;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        padding-top: 70px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .navbar {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--secondary) !important;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        transition: all 0.3s;
+        border-radius: 4px;
+        margin: 0 2px;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--secondary) !important;
+      }
+
+      .section-title {
+        margin-top: 40px;
+        margin-bottom: 25px;
+        font-weight: 700;
+        color: var(--primary);
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .section-title:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: var(--secondary);
+        border-radius: 2px;
+      }
+
+      .card-custom {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .card-header-custom {
+        background-color: var(--primary);
+        color: white;
+        padding: 15px 20px;
+        border-bottom: none;
+      }
+
+      .table-custom {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .table-custom thead th {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 15px;
+      }
+
+      .table-custom tbody td {
+        padding: 12px 15px;
+        border-color: #e9ecef;
+      }
+
+      .table-custom tbody tr:hover {
+        background-color: rgba(52, 152, 219, 0.05);
+      }
+
+      footer {
+        background-color: var(--dark);
+        color: white;
+        padding: 30px 0;
+        margin-top: 50px;
+      }
+
+      .page-content {
+        min-height: calc(100vh - 200px);
+      }
+
+      .config-badge {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .bg-area0 {
+        background-color: rgba(52, 152, 219, 0.2);
+        color: #2980b9;
+      }
+
+      .bg-vlan10 {
+        background-color: rgba(46, 204, 113, 0.2);
+        color: #27ae60;
+      }
+
+      .bg-vlan20 {
+        background-color: rgba(155, 89, 182, 0.2);
+        color: #8e44ad;
+      }
+
+      .bg-vlan30 {
+        background-color: rgba(241, 196, 15, 0.2);
+        color: #f39c12;
+      }
+
+      .bg-vlan40 {
+        background-color: rgba(230, 126, 34, 0.2);
+        color: #d35400;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <i class="bi bi-hdd-network me-2"></i>TechSolutions SARL
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="architecture.html">Architecture</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="configuration.html"
+                >Configuration</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="services.html">Services VM</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tests.html">Tests</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="commands.html">Commandes</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container page-content">
+      <h1 class="section-title">Configuration du Réseau</h1>
+
+      <div class="card card-custom">
+        <div class="card-header card-header-custom">
+          <h3 class="mb-0">
+            <i class="bi bi-router me-2"></i>Plan d'Adressage IP
+          </h3>
+        </div>
+        <div class="card-body">
+          <p>
+            Le plan d'adressage utilise la technique VLSM (Variable Length
+            Subnet Mask) pour une allocation efficace des adresses IP selon les
+            besoins de chaque département.
+          </p>
+
+          <h5 class="mt-4">Configuration des Routeurs</h5>
+          <div class="table-responsive">
+            <table class="table table-custom">
+              <thead>
+                <tr>
+                  <th>Routeur</th>
+                  <th>Interface</th>
+                  <th>Adresse IP</th>
+                  <th>Masque</th>
+                  <th>Réseau</th>
+                  <th>Area OSPF</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>RZ1</strong> (Web)</td>
+                  <td>GigabitEthernet0/0</td>
+                  <td>172.24.0.1</td>
+                  <td>/18 (255.255.192.0)</td>
+                  <td>172.24.0.0/18</td>
+                  <td><span class="config-badge bg-area0">Area 0</span></td>
+                </tr>
+                <tr>
+                  <td><strong>RZ2</strong> (IT)</td>
+                  <td>GigabitEthernet0/0</td>
+                  <td>172.24.64.1</td>
+                  <td>/21 (255.255.248.0)</td>
+                  <td>172.24.64.0/21</td>
+                  <td><span class="config-badge bg-area0">Area 0</span></td>
+                </tr>
+                <tr>
+                  <td><strong>RZ3</strong> (DB)</td>
+                  <td>GigabitEthernet0/0</td>
+                  <td>172.24.72.1</td>
+                  <td>/23 (255.255.254.0)</td>
+                  <td>172.24.72.0/23</td>
+                  <td><span class="config-badge bg-area0">Area 0</span></td>
+                </tr>
+                <tr>
+                  <td><strong>RZ4</strong> (NFS)</td>
+                  <td>GigabitEthernet0/0</td>
+                  <td>172.24.74.1</td>
+                  <td>/24 (255.255.255.0)</td>
+                  <td>172.24.74.0/24</td>
+                  <td><span class="config-badge bg-area0">Area 0</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert alert-info mt-3">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Note :</strong> Tous les routeurs participent à l'area 0
+            OSPF pour assurer une convergence rapide du routage.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-custom h-100">
+            <div class="card-header card-header-custom">
+              <h4 class="mb-0">
+                <i class="bi bi-hdd-network me-2"></i>VLAN et DHCP
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-custom">
+                  <thead>
+                    <tr>
+                      <th>Département</th>
+                      <th>VLAN</th>
+                      <th>Plage DHCP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Web/Marketing</td>
+                      <td>
+                        <span class="config-badge bg-vlan10">VLAN 10</span>
+                      </td>
+                      <td>172.24.0.10 - 172.24.0.254</td>
+                    </tr>
+                    <tr>
+                      <td>IT</td>
+                      <td>
+                        <span class="config-badge bg-vlan20">VLAN 20</span>
+                      </td>
+                      <td>172.24.64.10 - 172.24.71.254</td>
+                    </tr>
+                    <tr>
+                      <td>Base de Données</td>
+                      <td>
+                        <span class="config-badge bg-vlan30">VLAN 30</span>
+                      </td>
+                      <td>172.24.72.10 - 172.24.73.254</td>
+                    </tr>
+                    <tr>
+                      <td>NFS</td>
+                      <td>
+                        <span class="config-badge bg-vlan40">VLAN 40</span>
+                      </td>
+                      <td>172.24.74.10 - 172.24.74.254</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-custom h-100">
+            <div class="card-header card-header-custom">
+              <h4 class="mb-0">
+                <i class="bi bi-shield-lock me-2"></i>Sécurité et NAT
+              </h4>
+            </div>
+            <div class="card-body">
+              <h6>Configuration NAT sur RZ1</h6>
+              <p>
+                Le routeur RZ1 est configuré pour fournir l'accès Internet à
+                l'ensemble du réseau via NAT (Network Address Translation).
+              </p>
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                  NAT Overload (PAT) configuré
+                </li>
+                <li class="list-group-item">
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                  ACL pour le trafic autorisé
+                </li>
+                <li class="list-group-item">
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                  Politiques de sécurité inter-VLAN
+                </li>
+                <li class="list-group-item">
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                  Filtrage par port sur les services sensibles
+                </li>
+              </ul>
+
+              <div class="alert alert-warning mt-3">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <strong>Attention :</strong> Les politiques de sécurité
+                restreignent l'accès entre certains VLANs pour des raisons de
+                sécurité.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-custom mt-4">
+        <div class="card-header card-header-custom">
+          <h4 class="mb-0">
+            <i class="bi bi-diagram-3 me-2"></i>Résumé du Plan d'Adressage
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-md-3 mb-4">
+              <div class="p-3 border rounded bg-light">
+                <h5>Web/Marketing</h5>
+                <div class="config-badge bg-vlan10 d-inline-block mb-2">
+                  VLAN 10
+                </div>
+                <p class="mb-1">172.24.0.0/18</p>
+                <small class="text-muted">2046 hôtes disponibles</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-4">
+              <div class="p-3 border rounded bg-light">
+                <h5>IT</h5>
+                <div class="config-badge bg-vlan20 d-inline-block mb-2">
+                  VLAN 20
+                </div>
+                <p class="mb-1">172.24.64.0/21</p>
+                <small class="text-muted">2046 hôtes disponibles</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-4">
+              <div class="p-3 border rounded bg-light">
+                <h5>Base de Données</h5>
+                <div class="config-badge bg-vlan30 d-inline-block mb-2">
+                  VLAN 30
+                </div>
+                <p class="mb-1">172.24.72.0/23</p>
+                <small class="text-muted">510 hôtes disponibles</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-4">
+              <div class="p-3 border rounded bg-light">
+                <h5>NFS</h5>
+                <div class="config-badge bg-vlan40 d-inline-block mb-2">
+                  VLAN 40
+                </div>
+                <p class="mb-1">172.24.74.0/24</p>
+                <small class="text-muted">254 hôtes disponibles</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5><i class="bi bi-hdd-network me-2"></i>TechSolutions SARL</h5>
+            <p>Infrastructure Réseau & Services</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="mb-0">Documentation Interactive</p>
+            <p class="mb-0">&copy; 2025 Tous droits réservés</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
