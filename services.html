@@ -738,7 +738,6 @@
       </div>
       <!-- Add this modal structure after the row div closing tag -->
       <!-- Configuration Modal -->
-      <!-- Enhanced Configuration Modal -->
       <div
         class="modal fade"
         id="configModal"
@@ -748,7 +747,7 @@
       >
         <div class="modal-dialog modal-xl modal-dialog-centered">
           <div class="modal-content border-0">
-            <!-- Modal Header -->
+            <!-- En-tête du modal -->
             <div class="modal-header gradient-header p-4">
               <div class="d-flex align-items-center">
                 <div class="service-icon-modal me-3" id="modalServiceIcon">
@@ -756,7 +755,7 @@
                 </div>
                 <div>
                   <h5 class="modal-title text-white mb-1" id="configModalLabel">
-                    Configuration Steps
+                    Étapes de configuration
                   </h5>
                   <p class="text-white-50 mb-0 small" id="modalSubtitle"></p>
                 </div>
@@ -765,65 +764,67 @@
                 type="button"
                 class="btn-close btn-close-white"
                 data-bs-dismiss="modal"
-                aria-label="Close"
+                aria-label="Fermer"
               ></button>
             </div>
 
-            <!-- Modal Body -->
+            <!-- Corps du modal -->
             <div class="modal-body p-0">
               <div class="container-fluid p-0">
                 <div class="row g-0">
-                  <!-- Left Column - Steps -->
+                  <!-- Colonne gauche - Étapes -->
                   <div class="col-lg-8">
                     <div class="p-4">
                       <div
                         class="d-flex justify-content-between align-items-center mb-4"
                       >
                         <h6 class="mb-0 text-primary fw-bold">
-                          Step-by-Step Configuration
+                          Configuration étape par étape
                         </h6>
                         <span
                           class="badge bg-primary-subtle text-primary rounded-pill"
                           id="stepsCount"
-                          >10 Steps</span
                         >
+                          10 étapes
+                        </span>
                       </div>
 
                       <div class="timeline-steps" id="stepsContent">
-                        <!-- Steps will be loaded here -->
+                        <!-- Les étapes seront chargées ici -->
                       </div>
 
                       <div class="mt-4 pt-3 border-top">
                         <h6 class="mb-3 text-primary fw-bold">
-                          Quick Commands
+                          Commandes rapides
                         </h6>
                         <div class="row g-2" id="quickCommands">
-                          <!-- Quick commands will be loaded here -->
+                          <!-- Les commandes rapides seront chargées ici -->
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Right Column - Info & Actions -->
+                  <!-- Colonne droite - Infos & Actions -->
                   <div class="col-lg-4 bg-light">
                     <div class="p-4 h-100">
                       <div class="service-info-card mb-4">
                         <h6 class="mb-3 text-primary fw-bold">
-                          <i class="bi bi-info-circle me-2"></i>Service
-                          Information
+                          <i class="bi bi-info-circle me-2"></i>
+                          Informations du service
                         </h6>
                         <div id="quickInfo">
-                          <!-- Quick info will be loaded here -->
+                          <!-- Les informations rapides seront chargées ici -->
                         </div>
                       </div>
 
                       <div class="actions-card">
                         <h6 class="mb-3 text-primary fw-bold">
-                          <i class="bi bi-download me-2"></i>Download Script
+                          <i class="bi bi-download me-2"></i>
+                          Télécharger le script
                         </h6>
                         <p class="text-muted small mb-3">
-                          Download ready-to-use installation script for Ubuntu
-                          Server 22.04/24.04
+                          Téléchargez un script d’installation prêt à l’emploi
+                          pour Ubuntu Server 22.04 / 24.04
                         </p>
 
                         <button
@@ -831,7 +832,7 @@
                           class="btn btn-primary w-100 py-3 mb-3 download-btn"
                         >
                           <i class="bi bi-file-earmark-code me-2"></i>
-                          <span>Download Installation Script</span>
+                          <span>Télécharger le script d’installation</span>
                         </button>
 
                         <div class="d-flex gap-2">
@@ -839,21 +840,23 @@
                             class="btn btn-outline-primary flex-fill"
                             id="copyCommandsBtn"
                           >
-                            <i class="bi bi-clipboard me-1"></i>Copy Commands
+                            <i class="bi bi-clipboard me-1"></i>
+                            Copier les commandes
                           </button>
                           <button
                             class="btn btn-outline-secondary flex-fill"
                             id="printGuideBtn"
                           >
-                            <i class="bi bi-printer me-1"></i>Print Guide
+                            <i class="bi bi-printer me-1"></i>
+                            Imprimer le guide
                           </button>
                         </div>
 
                         <div class="mt-4 pt-3 border-top">
                           <small class="text-muted">
                             <i class="bi bi-shield-check me-1"></i>
-                            Script includes security configurations and best
-                            practices
+                            Le script inclut des configurations de sécurité et
+                            des bonnes pratiques
                           </small>
                         </div>
                       </div>
@@ -863,7 +866,7 @@
               </div>
             </div>
 
-            <!-- Modal Footer -->
+            <!-- Pied du modal -->
             <div class="modal-footer bg-light border-top">
               <div
                 class="w-100 d-flex justify-content-between align-items-center"
@@ -871,8 +874,8 @@
                 <div>
                   <span class="text-muted small">
                     <i class="bi bi-clock me-1"></i>
-                    Estimated setup time:
-                    <span id="estimatedTime">15-20 minutes</span>
+                    Temps estimé d’installation :
+                    <span id="estimatedTime">15–20 minutes</span>
                   </span>
                 </div>
                 <div>
@@ -881,14 +884,15 @@
                     class="btn btn-outline-secondary me-2"
                     data-bs-dismiss="modal"
                   >
-                    Close
+                    Fermer
                   </button>
                   <button
                     type="button"
                     class="btn btn-primary"
                     id="startInstallBtn"
                   >
-                    <i class="bi bi-play-circle me-1"></i>Start Installation
+                    <i class="bi bi-play-circle me-1"></i>
+                    Démarrer l’installation
                   </button>
                 </div>
               </div>
@@ -896,6 +900,7 @@
           </div>
         </div>
       </div>
+
       <div class="card card-custom mt-4">
         <div class="card-header card-header-custom">
           <h4 class="mb-0">

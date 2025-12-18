@@ -1,281 +1,309 @@
 // Configuration data with enhanced details
 const configData = {
   web: {
-    title: "Web/Marketing Server Configuration",
-    subtitle: "Apache2 + Nginx + PHP + MySQL Stack",
-    icon: "bi-globe",
-    estimatedTime: "20-30 minutes",
-    color: "#667eea",
-    steps: [
-      {
-        title: "System Update & Prerequisites",
-        command: "sudo apt update && sudo apt upgrade -y",
-        details: "Update system packages and install basic dependencies"
-      },
-      {
-        title: "Install Apache2 Web Server",
-        command: "sudo apt install apache2 -y",
-        details: "Install Apache2 with default configurations"
-      },
-      {
-        title: "Install MySQL Database",
-        command: "sudo apt install mysql-server -y",
-        details: "Install MySQL 8.0 with secure installation"
-      },
-      {
-        title: "Install PHP & Required Modules",
-        command: "sudo apt install php libapache2-mod-php php-mysql php-curl php-gd php-mbstring php-xml php-zip -y",
-        details: "Install PHP 8.1+ with commonly used extensions"
-      },
-      {
-        title: "Configure Virtual Host",
-        command: `sudo nano /etc/apache2/sites-available/entreprisesyrine.conf`,
-        details: "Create virtual host configuration file"
-      },
-      {
-        title: "Enable Site & Modules",
-        command: "sudo a2ensite entreprisesyrine.conf && sudo a2enmod rewrite && sudo a2enmod ssl",
-        details: "Activate the site and enable necessary modules"
-      },
-      {
-        title: "Database Setup",
-        command: `mysql -e "CREATE DATABASE entreprise; CREATE USER 'webuser'@'localhost' IDENTIFIED BY 'SecurePass123!'; GRANT ALL ON entreprise.* TO 'webuser'@'localhost'; FLUSH PRIVILEGES;"`,
-        details: "Create database and user with secure credentials"
-      },
-      {
-        title: "Deploy Web Application",
-        command: "sudo cp -r web_app/* /var/www/html/ && sudo chown -R www-data:www-data /var/www/html",
-        details: "Copy application files and set proper permissions"
-      },
-      {
-        title: "SSL Certificate (Let's Encrypt)",
-        command: "sudo apt install certbot python3-certbot-apache -y && sudo certbot --apache",
-        details: "Install and configure SSL certificate for HTTPS"
-      },
-      {
-        title: "Final Configuration & Restart",
-        command: "sudo systemctl restart apache2 && sudo systemctl restart mysql",
-        details: "Restart all services and verify installation"
-      }
-    ],
-    quickCommands: [
-      { command: "sudo systemctl status apache2", label: "Check Apache Status" },
-      { command: "sudo mysql -u webuser -p", label: "Access Database" },
-      { command: "sudo tail -f /var/log/apache2/error.log", label: "View Error Logs" }
-    ],
-    quickInfo: {
-      ports: ["80 (HTTP)", "443 (HTTPS)", "3306 (MySQL)"],
-      directories: ["/var/www/html", "/etc/apache2", "/var/log/apache2"],
-      dependencies: ["Apache2", "MySQL 8.0", "PHP 8.1+", "Certbot"]
+  "title": "Configuration du serveur Web/Marketing",
+  "subtitle": "Pile Apache2 + Nginx + PHP + MySQL",
+  "icon": "bi-globe",
+  "estimatedTime": "20–30 minutes",
+  "color": "#667eea",
+  "steps": [
+    {
+      "title": "Mise à jour du système & prérequis",
+      "command": "sudo apt update && sudo apt upgrade -y",
+      "details": "Mettre à jour les paquets du système et installer les dépendances de base"
+    },
+    {
+      "title": "Installer le serveur Web Apache2",
+      "command": "sudo apt install apache2 -y",
+      "details": "Installer Apache2 avec les configurations par défaut"
+    },
+    {
+      "title": "Installer la base de données MySQL",
+      "command": "sudo apt install mysql-server -y",
+      "details": "Installer MySQL 8.0 avec une configuration sécurisée"
+    },
+    {
+      "title": "Installer PHP & les modules requis",
+      "command": "sudo apt install php libapache2-mod-php php-mysql php-curl php-gd php-mbstring php-xml php-zip -y",
+      "details": "Installer PHP 8.1+ avec les extensions couramment utilisées"
+    },
+    {
+      "title": "Configurer l’hôte virtuel",
+      "command": "sudo nano /etc/apache2/sites-available/entreprisesyrine.conf",
+      "details": "Créer le fichier de configuration de l’hôte virtuel"
+    },
+    {
+      "title": "Activer le site & les modules",
+      "command": "sudo a2ensite entreprisesyrine.conf && sudo a2enmod rewrite && sudo a2enmod ssl",
+      "details": "Activer le site et les modules nécessaires"
+    },
+    {
+      "title": "Configuration de la base de données",
+      "command": "mysql -e \"CREATE DATABASE entreprise; CREATE USER 'webuser'@'localhost' IDENTIFIED BY 'SecurePass123!'; GRANT ALL ON entreprise.* TO 'webuser'@'localhost'; FLUSH PRIVILEGES;\"",
+      "details": "Créer la base de données et l’utilisateur avec des identifiants sécurisés"
+    },
+    {
+      "title": "Déployer l’application Web",
+      "command": "sudo cp -r web_app/* /var/www/html/ && sudo chown -R www-data:www-data /var/www/html",
+      "details": "Copier les fichiers de l’application et définir les permissions appropriées"
+    },
+    {
+      "title": "Certificat SSL (Let’s Encrypt)",
+      "command": "sudo apt install certbot python3-certbot-apache -y && sudo certbot --apache",
+      "details": "Installer et configurer le certificat SSL pour le HTTPS"
+    },
+    {
+      "title": "Configuration finale & redémarrage",
+      "command": "sudo systemctl restart apache2 && sudo systemctl restart mysql",
+      "details": "Redémarrer tous les services et vérifier l’installation"
     }
-  },
-  monitoring: {
-    title: "Zabbix Monitoring Server Configuration",
-    subtitle: "Enterprise-grade Infrastructure Monitoring",
-    icon: "bi-graph-up",
-    estimatedTime: "25-35 minutes",
-    color: "#10b981",
-    steps: [
-      {
-        title: "System Preparation",
-        command: "sudo apt update && sudo apt upgrade -y && sudo apt install -y wget gnupg2 software-properties-common",
-        details: "Update system and install prerequisites"
-      },
-      {
-        title: "Add Zabbix Repository",
-        command: "wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu$(lsb_release -rs)_all.deb",
-        details: "Download Zabbix repository package"
-      },
-      {
-        title: "Install Repository",
-        command: "sudo dpkg -i zabbix-release_*.deb && sudo apt update",
-        details: "Install repository and update package list"
-      },
-      {
-        title: "Install Zabbix Components",
-        command: "sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent",
-        details: "Install all Zabbix server components"
-      },
-      {
-        title: "Create Zabbix Database",
-        command: `sudo mysql -uroot -e "create database zabbix character set utf8mb4 collate utf8mb4_bin; create user zabbix@localhost identified by 'StrongPassword123'; grant all privileges on zabbix.* to zabbix@localhost;"`,
-        details: "Create database with secure credentials"
-      },
-      {
-        title: "Import Initial Schema",
-        command: "sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix",
-        details: "Import database structure and initial data"
-      },
-      {
-        title: "Configure Zabbix Server",
-        command: `sudo sed -i "s/# DBPassword=/DBPassword=StrongPassword123/" /etc/zabbix/zabbix_server.conf`,
-        details: "Update database password in configuration"
-      },
-      {
-        title: "Configure PHP Settings",
-        command: `sudo sed -i "s/# php_value date.timezone Europe\\/Riga/php_value date.timezone Europe\\/Paris/" /etc/zabbix/apache.conf`,
-        details: "Set correct timezone for PHP"
-      },
-      {
-        title: "Configure Zabbix Agent",
-        command: `sudo sed -i "s/Server=127.0.0.1/Server=127.0.0.1,172.24.64.5/" /etc/zabbix/zabbix_agentd.conf`,
-        details: "Update agent configuration"
-      },
-      {
-        title: "Start & Enable Services",
-        command: "sudo systemctl restart zabbix-server zabbix-agent apache2 && sudo systemctl enable zabbix-server zabbix-agent apache2",
-        details: "Start all services and enable auto-start"
-      }
-    ],
-    quickCommands: [
-      { command: "sudo systemctl status zabbix-server", label: "Check Zabbix Server" },
-      { command: "zabbix_get -s 127.0.0.1 -k agent.ping", label: "Test Agent Connection" },
-      { command: "sudo tail -f /var/log/zabbix/zabbix_server.log", label: "Monitor Server Logs" }
-    ],
-    quickInfo: {
-      ports: ["10051 (Server)", "10050 (Agent)", "80 (Web)"],
-      directories: ["/usr/share/zabbix", "/etc/zabbix", "/var/log/zabbix"],
-      webInterface: "http://server_ip/zabbix (admin:zabbix)"
-    }
-  },
-  database: {
-    title: "MySQL Database Server Configuration",
-    subtitle: "High Availability Database Cluster",
-    icon: "bi-database",
-    estimatedTime: "15-25 minutes",
-    color: "#f59e0b",
-    steps: [
-      {
-        title: "System Update",
-        command: "sudo apt update && sudo apt upgrade -y",
-        details: "Update system packages"
-      },
-      {
-        title: "Install MySQL Server",
-        command: "sudo apt install mysql-server -y",
-        details: "Install MySQL 8.0 server"
-      },
-      {
-        title: "Secure MySQL Installation",
-        command: "sudo mysql_secure_installation",
-        details: "Run security configuration wizard"
-      },
-      {
-        title: "Enable Remote Access",
-        command: `sudo sed -i "s/^bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf`,
-        details: "Configure MySQL to accept remote connections"
-      },
-      {
-        title: "Create Remote User",
-        command: `mysql -e "CREATE USER 'client'@'172.24.72.%' IDENTIFIED BY 'Client@Secure2025'; GRANT ALL PRIVILEGES ON *.* TO 'client'@'172.24.72.%' WITH GRANT OPTION; FLUSH PRIVILEGES;"`,
-        details: "Create secure remote user with appropriate permissions"
-      },
-      {
-        title: "Configure Firewall Rules",
-        command: "sudo ufw allow from 172.24.72.0/24 to any port 3306",
-        details: "Allow database access from specific subnet"
-      },
-      {
-        title: "Configure Backup User",
-        command: `mysql -e "CREATE USER 'backup_user'@'localhost' IDENTIFIED BY 'Backup@123'; GRANT SELECT, RELOAD, PROCESS, LOCK TABLES ON *.* TO 'backup_user'@'localhost';"`,
-        details: "Create dedicated backup user with limited permissions"
-      },
-      {
-        title: "Set Up Automatic Backups",
-        command: `echo "0 2 * * * /usr/bin/mysqldump -u backup_user -pBackup@123 --all-databases | gzip > /backup/mysql-\\$(date +\\%Y\\%m\\%d).sql.gz" | sudo crontab -`,
-        details: "Configure daily automated backups"
-      },
-      {
-        title: "Enable Binary Logging",
-        command: `echo "server-id = 1\nlog_bin = /var/log/mysql/mysql-bin.log" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf`,
-        details: "Configure binary logging for replication"
-      },
-      {
-        title: "Restart & Verify",
-        command: "sudo systemctl restart mysql && sudo mysql -e 'SHOW VARIABLES LIKE \"bind_address\";'",
-        details: "Restart service and verify configuration"
-      }
-    ],
-    quickCommands: [
-      { command: "sudo mysql -u root -p", label: "Access MySQL Console" },
-      { command: "sudo systemctl status mysql", label: "Check Service Status" },
-      { command: "mysql -u client -h 172.24.72.5 -p", label: "Test Remote Connection" }
-    ],
-    quickInfo: {
-      ports: ["3306 (MySQL)", "33060 (MySQL X Protocol)"],
-      directories: ["/var/lib/mysql", "/etc/mysql", "/var/log/mysql"],
-      credentials: "client:Client@Secure2025 | root:[Set during installation]"
-    }
-  },
-  nfs: {
-    title: "NFS File Sharing Server Configuration",
-    subtitle: "Enterprise Network File System",
-    icon: "bi-folder",
-    estimatedTime: "10-20 minutes",
-    color: "#8b5cf6",
-    steps: [
-      {
-        title: "System Preparation",
-        command: "sudo apt update && sudo apt upgrade -y",
-        details: "Update system packages"
-      },
-      {
-        title: "Install NFS Server",
-        command: "sudo apt install nfs-kernel-server -y",
-        details: "Install NFS server package"
-      },
-      {
-        title: "Create Shared Directory",
-        command: "sudo mkdir -p /srv/nfs_collab && sudo chmod 755 /srv/nfs_collab",
-        details: "Create and set permissions for shared directory"
-      },
-      {
-        title: "Create NFS User & Group",
-        command: "sudo groupadd -g 50000 nfsusers && sudo useradd -u 50000 -g nfsusers -s /bin/false -m nfsuser",
-        details: "Create dedicated user for NFS operations"
-      },
-      {
-        title: "Set Directory Ownership",
-        command: "sudo chown nfsuser:nfsusers /srv/nfs_collab",
-        details: "Assign proper ownership to shared directory"
-      },
-      {
-        title: "Configure NFS Exports",
-        command: `echo "/srv/nfs_collab 172.24.74.0/24(rw,sync,no_subtree_check,all_squash,anonuid=50000,anongid=50000)" | sudo tee -a /etc/exports`,
-        details: "Configure export permissions for specific subnet"
-      },
-      {
-        title: "Apply Export Configuration",
-        command: "sudo exportfs -ra",
-        details: "Refresh export configuration"
-      },
-      {
-        title: "Start NFS Services",
-        command: "sudo systemctl start nfs-kernel-server && sudo systemctl enable nfs-kernel-server",
-        details: "Start and enable NFS services"
-      },
-      {
-        title: "Configure Firewall",
-        command: "sudo ufw allow from 172.24.74.0/24 to any port nfs",
-        details: "Allow NFS traffic from specific subnet"
-      },
-      {
-        title: "Test NFS Server",
-        command: "showmount -e localhost",
-        details: "Verify NFS exports are correctly configured"
-      }
-    ],
-    quickCommands: [
-      { command: "showmount -e localhost", label: "List NFS Exports" },
-      { command: "sudo systemctl status nfs-kernel-server", label: "Check NFS Status" },
-      { command: "sudo exportfs -v", label: "View Export Details" }
-    ],
-    quickInfo: {
-      ports: ["2049 (NFS)", "111 (RPC)", "20048 (Mountd)"],
-      directories: ["/srv/nfs_collab", "/etc/exports", "/var/log/nfs"],
-      clientCommand: "sudo mount -t nfs 172.24.74.5:/srv/nfs_collab /mnt/nfs_local"
-    }
+  ],
+  "quickCommands": [
+    { "command": "sudo systemctl status apache2", "label": "Vérifier l’état d’Apache" },
+    { "command": "sudo mysql -u webuser -p", "label": "Accéder à la base de données" },
+    { "command": "sudo tail -f /var/log/apache2/error.log", "label": "Voir les journaux d’erreurs" }
+  ],
+  "quickInfo": {
+    "ports": ["80 (HTTP)", "443 (HTTPS)", "3306 (MySQL)"],
+    "directories": ["/var/www/html", "/etc/apache2", "/var/log/apache2"],
+    "dependencies": ["Apache2", "MySQL 8.0", "PHP 8.1+", "Certbot"]
   }
+},
+  monitoring: {
+  "title": "Configuration du serveur de supervision Zabbix",
+  "subtitle": "Supervision d’infrastructure de niveau entreprise",
+  "icon": "bi-graph-up",
+  "estimatedTime": "25–35 minutes",
+  "color": "#10b981",
+  "steps": [
+    {
+      "title": "Préparation du système",
+      "command": "sudo apt update && sudo apt upgrade -y && sudo apt install -y wget gnupg2 software-properties-common",
+      "details": "Mettre à jour le système et installer les prérequis"
+    },
+    {
+      "title": "Ajouter le dépôt Zabbix",
+      "command": "wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu$(lsb_release -rs)_all.deb",
+      "details": "Télécharger le paquet du dépôt Zabbix"
+    },
+    {
+      "title": "Installer le dépôt",
+      "command": "sudo dpkg -i zabbix-release_*.deb && sudo apt update",
+      "details": "Installer le dépôt et mettre à jour la liste des paquets"
+    },
+    {
+      "title": "Installer les composants Zabbix",
+      "command": "sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent",
+      "details": "Installer tous les composants du serveur Zabbix"
+    },
+    {
+      "title": "Créer la base de données Zabbix",
+      "command": "sudo mysql -uroot -e \"create database zabbix character set utf8mb4 collate utf8mb4_bin; create user zabbix@localhost identified by 'StrongPassword123'; grant all privileges on zabbix.* to zabbix@localhost;\"",
+      "details": "Créer la base de données avec des identifiants sécurisés"
+    },
+    {
+      "title": "Importer le schéma initial",
+      "command": "sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix",
+      "details": "Importer la structure de la base de données et les données initiales"
+    },
+    {
+      "title": "Configurer le serveur Zabbix",
+      "command": "sudo sed -i \"s/# DBPassword=/DBPassword=StrongPassword123/\" /etc/zabbix/zabbix_server.conf",
+      "details": "Mettre à jour le mot de passe de la base de données dans la configuration"
+    },
+    {
+      "title": "Configurer les paramètres PHP",
+      "command": "sudo sed -i \"s/# php_value date.timezone Europe\\/Riga/php_value date.timezone Europe\\/Paris/\" /etc/zabbix/apache.conf",
+      "details": "Définir le fuseau horaire correct pour PHP"
+    },
+    {
+      "title": "Configurer l’agent Zabbix",
+      "command": "sudo sed -i \"s/Server=127.0.0.1/Server=127.0.0.1,172.24.64.5/\" /etc/zabbix/zabbix_agentd.conf",
+      "details": "Mettre à jour la configuration de l’agent"
+    },
+    {
+      "title": "Démarrer & activer les services",
+      "command": "sudo systemctl restart zabbix-server zabbix-agent apache2 && sudo systemctl enable zabbix-server zabbix-agent apache2",
+      "details": "Démarrer tous les services et activer le démarrage automatique"
+    }
+  ],
+  "quickCommands": [
+    {
+      "command": "sudo systemctl status zabbix-server",
+      "label": "Vérifier le serveur Zabbix"
+    },
+    {
+      "command": "zabbix_get -s 127.0.0.1 -k agent.ping",
+      "label": "Tester la connexion de l’agent"
+    },
+    {
+      "command": "sudo tail -f /var/log/zabbix/zabbix_server.log",
+      "label": "Surveiller les journaux du serveur"
+    }
+  ],
+  "quickInfo": {
+    "ports": ["10051 (Serveur)", "10050 (Agent)", "80 (Web)"],
+    "directories": ["/usr/share/zabbix", "/etc/zabbix", "/var/log/zabbix"],
+    "webInterface": "http://ip_du_serveur/zabbix (admin:zabbix)"
+  }
+},
+  database: {
+  "title": "Configuration du serveur de base de données MySQL",
+  "subtitle": "Cluster de base de données haute disponibilité",
+  "icon": "bi-database",
+  "estimatedTime": "15–25 minutes",
+  "color": "#f59e0b",
+  "steps": [
+    {
+      "title": "Mise à jour du système",
+      "command": "sudo apt update && sudo apt upgrade -y",
+      "details": "Mettre à jour les paquets du système"
+    },
+    {
+      "title": "Installer le serveur MySQL",
+      "command": "sudo apt install mysql-server -y",
+      "details": "Installer le serveur MySQL 8.0"
+    },
+    {
+      "title": "Sécuriser l’installation MySQL",
+      "command": "sudo mysql_secure_installation",
+      "details": "Lancer l’assistant de configuration de sécurité"
+    },
+    {
+      "title": "Activer l’accès distant",
+      "command": "sudo sed -i \"s/^bind-address.*/bind-address = 0.0.0.0/\" /etc/mysql/mysql.conf.d/mysqld.cnf",
+      "details": "Configurer MySQL pour accepter les connexions distantes"
+    },
+    {
+      "title": "Créer un utilisateur distant",
+      "command": "mysql -e \"CREATE USER 'client'@'172.24.72.%' IDENTIFIED BY 'Client@Secure2025'; GRANT ALL PRIVILEGES ON *.* TO 'client'@'172.24.72.%' WITH GRANT OPTION; FLUSH PRIVILEGES;\"",
+      "details": "Créer un utilisateur distant sécurisé avec les permissions appropriées"
+    },
+    {
+      "title": "Configurer les règles du pare-feu",
+      "command": "sudo ufw allow from 172.24.72.0/24 to any port 3306",
+      "details": "Autoriser l’accès à la base de données depuis un sous-réseau spécifique"
+    },
+    {
+      "title": "Configurer l’utilisateur de sauvegarde",
+      "command": "mysql -e \"CREATE USER 'backup_user'@'localhost' IDENTIFIED BY 'Backup@123'; GRANT SELECT, RELOAD, PROCESS, LOCK TABLES ON *.* TO 'backup_user'@'localhost';\"",
+      "details": "Créer un utilisateur dédié aux sauvegardes avec des permissions limitées"
+    },
+    {
+      "title": "Mettre en place des sauvegardes automatiques",
+      "command": "echo \"0 2 * * * /usr/bin/mysqldump -u backup_user -pBackup@123 --all-databases | gzip > /backup/mysql-\\$(date +\\%Y\\%m\\%d).sql.gz\" | sudo crontab -",
+      "details": "Configurer des sauvegardes quotidiennes automatisées"
+    },
+    {
+      "title": "Activer la journalisation binaire",
+      "command": "echo \"server-id = 1\nlog_bin = /var/log/mysql/mysql-bin.log\" | sudo tee -a /etc/mysql/mysql.conf.d/mysqld.cnf",
+      "details": "Configurer la journalisation binaire pour la réplication"
+    },
+    {
+      "title": "Redémarrer & vérifier",
+      "command": "sudo systemctl restart mysql && sudo mysql -e 'SHOW VARIABLES LIKE \"bind_address\";'",
+      "details": "Redémarrer le service et vérifier la configuration"
+    }
+  ],
+  "quickCommands": [
+    {
+      "command": "sudo mysql -u root -p",
+      "label": "Accéder à la console MySQL"
+    },
+    {
+      "command": "sudo systemctl status mysql",
+      "label": "Vérifier l’état du service"
+    },
+    {
+      "command": "mysql -u client -h 172.24.72.5 -p",
+      "label": "Tester la connexion distante"
+    }
+  ],
+  "quickInfo": {
+    "ports": ["3306 (MySQL)", "33060 (Protocole MySQL X)"],
+    "directories": ["/var/lib/mysql", "/etc/mysql", "/var/log/mysql"],
+    "credentials": "client:Client@Secure2025 | root : [Défini lors de l’installation]"
+  }
+},
+  nfs: {
+  "title": "Configuration du serveur de partage de fichiers NFS",
+  "subtitle": "Système de fichiers réseau de niveau entreprise",
+  "icon": "bi-folder",
+  "estimatedTime": "10–20 minutes",
+  "color": "#8b5cf6",
+  "steps": [
+    {
+      "title": "Préparation du système",
+      "command": "sudo apt update && sudo apt upgrade -y",
+      "details": "Mettre à jour les paquets du système"
+    },
+    {
+      "title": "Installer le serveur NFS",
+      "command": "sudo apt install nfs-kernel-server -y",
+      "details": "Installer le paquet du serveur NFS"
+    },
+    {
+      "title": "Créer le répertoire partagé",
+      "command": "sudo mkdir -p /srv/nfs_collab && sudo chmod 755 /srv/nfs_collab",
+      "details": "Créer le répertoire partagé et définir les permissions"
+    },
+    {
+      "title": "Créer l’utilisateur et le groupe NFS",
+      "command": "sudo groupadd -g 50000 nfsusers && sudo useradd -u 50000 -g nfsusers -s /bin/false -m nfsuser",
+      "details": "Créer un utilisateur dédié aux opérations NFS"
+    },
+    {
+      "title": "Définir le propriétaire du répertoire",
+      "command": "sudo chown nfsuser:nfsusers /srv/nfs_collab",
+      "details": "Attribuer le bon propriétaire au répertoire partagé"
+    },
+    {
+      "title": "Configurer les exports NFS",
+      "command": "echo \"/srv/nfs_collab 172.24.74.0/24(rw,sync,no_subtree_check,all_squash,anonuid=50000,anongid=50000)\" | sudo tee -a /etc/exports",
+      "details": "Configurer les permissions d’export pour un sous-réseau spécifique"
+    },
+    {
+      "title": "Appliquer la configuration des exports",
+      "command": "sudo exportfs -ra",
+      "details": "Rafraîchir la configuration des exports"
+    },
+    {
+      "title": "Démarrer les services NFS",
+      "command": "sudo systemctl start nfs-kernel-server && sudo systemctl enable nfs-kernel-server",
+      "details": "Démarrer et activer les services NFS"
+    },
+    {
+      "title": "Configurer le pare-feu",
+      "command": "sudo ufw allow from 172.24.74.0/24 to any port nfs",
+      "details": "Autoriser le trafic NFS depuis un sous-réseau spécifique"
+    },
+    {
+      "title": "Tester le serveur NFS",
+      "command": "showmount -e localhost",
+      "details": "Vérifier que les exports NFS sont correctement configurés"
+    }
+  ],
+  "quickCommands": [
+    {
+      "command": "showmount -e localhost",
+      "label": "Lister les exports NFS"
+    },
+    {
+      "command": "sudo systemctl status nfs-kernel-server",
+      "label": "Vérifier l’état du service NFS"
+    },
+    {
+      "command": "sudo exportfs -v",
+      "label": "Afficher les détails des exports"
+    }
+  ],
+  "quickInfo": {
+    "ports": ["2049 (NFS)", "111 (RPC)", "20048 (Mountd)"],
+    "directories": ["/srv/nfs_collab", "/etc/exports", "/var/log/nfs"],
+    "clientCommand": "sudo mount -t nfs 172.24.74.5:/srv/nfs_collab /mnt/nfs_local"
+  }
+}
+
 };
 
 // Service icons mapping
