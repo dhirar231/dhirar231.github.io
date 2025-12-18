@@ -1,959 +1,817 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Services VM - TechSolutions SARL</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <style>
-      /* Same CSS as in the main file */
-      :root {
-        --primary: #2c3e50;
-        --secondary: #3498db;
-        --accent: #e74c3c;
-        --light: #ecf0f1;
-        --dark: #2c3e50;
-        --success: #2ecc71;
-        --warning: #f39c12;
-        --info: #17a2b8;
-      }
-
-      body {
-        background-color: #f8f9fa;
-        padding-top: 70px;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-
-      .navbar {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .navbar-brand {
-        font-weight: 700;
-        color: var(--secondary) !important;
-      }
-
-      .nav-link {
-        font-weight: 500;
-        transition: all 0.3s;
-        border-radius: 4px;
-        margin: 0 2px;
-      }
-
-      .nav-link:hover,
-      .nav-link.active {
-        background-color: rgba(52, 152, 219, 0.1);
-        color: var(--secondary) !important;
-      }
-
-      .section-title {
-        margin-top: 40px;
-        margin-bottom: 25px;
-        font-weight: 700;
-        color: var(--primary);
-        position: relative;
-        padding-bottom: 10px;
-      }
-
-      .section-title:after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 4px;
-        background-color: var(--secondary);
-        border-radius: 2px;
-      }
-
-      .card-custom {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s, box-shadow 0.3s;
-        margin-bottom: 30px;
-        overflow: hidden;
-      }
-
-      .card-header-custom {
-        background-color: var(--primary);
-        color: white;
-        padding: 15px 20px;
-        border-bottom: none;
-      }
-
-      .service-card {
-        text-align: center;
-        padding: 20px;
-        height: 100%;
-        border-radius: 12px;
-        background-color: white;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s;
-      }
-
-      .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      }
-
-      .service-icon {
-        font-size: 3rem;
-        color: var(--secondary);
-        margin-bottom: 15px;
-      }
-
-      .service-status {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-
-      .status-running {
-        background-color: rgba(46, 204, 113, 0.2);
-        color: var(--success);
-      }
-
-      .status-stopped {
-        background-color: rgba(231, 76, 60, 0.2);
-        color: var(--accent);
-      }
-
-      .table-custom {
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-      }
-
-      .table-custom thead th {
-        background-color: var(--primary);
-        color: white;
-        border: none;
-        padding: 15px;
-      }
-
-      .table-custom tbody td {
-        padding: 12px 15px;
-        border-color: #e9ecef;
-      }
-
-      .table-custom tbody tr:hover {
-        background-color: rgba(52, 152, 219, 0.05);
-      }
-
-      /* Modal Styles */
-      .modal-xl {
-        max-width: 1200px;
-      }
-
-      .modal-content {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      }
-
-      .gradient-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-bottom: none;
-      }
-
-      .service-icon-modal {
-        width: 60px;
-        height: 60px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        backdrop-filter: blur(10px);
-      }
-
-      /* Timeline Steps */
-      .timeline-steps {
-        position: relative;
-        padding-left: 30px;
-      }
-
-      .timeline-steps::before {
-        content: "";
-        position: absolute;
-        left: 15px;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: linear-gradient(to bottom, #667eea, #764ba2);
-      }
-
-      .step-item {
-        position: relative;
-        margin-bottom: 30px;
-        padding: 20px;
-        background: #fff;
-        border-radius: 16px;
-        border: 1px solid #e9ecef;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-      }
-
-      .step-item:hover {
-        transform: translateX(5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        border-left: 4px solid #667eea;
-      }
-
-      .step-number {
-        position: absolute;
-        left: -40px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 14px;
-        z-index: 2;
-      }
-
-      .step-content {
-        margin-left: 10px;
-      }
-
-      .step-title {
-        color: #2d3748;
-        font-weight: 600;
-        margin-bottom: 8px;
-        font-size: 15px;
-      }
-
-      .step-command {
-        background: #f8f9fa;
-        border-radius: 12px;
-        padding: 12px;
-        border-left: 3px solid #667eea;
-        margin-top: 10px;
-        position: relative;
-      }
-
-      .step-command pre {
-        margin: 0;
-        font-family: "Courier New", monospace;
-        font-size: 13px;
-        color: #2d3748;
-      }
-
-      .copy-btn {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        background: rgba(102, 126, 234, 0.1);
-        border: none;
-        color: #667eea;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .copy-btn:hover {
-        background: #667eea;
-        color: white;
-      }
-
-      /* Service Info Card */
-      .service-info-card {
-        background: white;
-        padding: 20px;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      }
-
-      .info-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #f1f3f4;
-      }
-
-      .info-item:last-child {
-        margin-bottom: 0;
-        border-bottom: none;
-      }
-
-      .info-icon {
-        width: 36px;
-        height: 36px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-right: 12px;
-      }
-
-      .info-content h6 {
-        font-size: 13px;
-        color: #6b7280;
-        margin: 0;
-      }
-
-      .info-content p {
-        font-size: 14px;
-        font-weight: 600;
-        color: #2d3748;
-        margin: 0;
-      }
-
-      /* Download Button */
-      .download-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .download-btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: 0.5s;
-      }
-
-      .download-btn:hover::before {
-        left: 100%;
-      }
-
-      .download-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-      }
-
-      /* Quick Commands */
-      .quick-command {
-        background: white;
-        border: 1px solid #e9ecef;
-        border-radius: 12px;
-        padding: 12px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .quick-command:hover {
-        background: #f8f9ff;
-        border-color: #667eea;
-      }
-
-      .quick-command pre {
-        margin: 0;
-        font-size: 12px;
-        color: #2d3748;
-        font-family: "Courier New", monospace;
-      }
-
-      .quick-command small {
-        color: #6b7280;
-        font-size: 11px;
-      }
-
-      /* Progress Indicator */
-      .progress-indicator {
-        height: 6px;
-        background: #e9ecef;
-        border-radius: 3px;
-        overflow: hidden;
-        margin-top: 5px;
-      }
-
-      .progress-bar {
-        height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-        border-radius: 3px;
-        transition: width 0.3s ease;
-      }
-
-      /* Responsive */
-      @media (max-width: 992px) {
-        .timeline-steps::before {
-          left: 10px;
-        }
-
-        .step-number {
-          left: -35px;
-          width: 28px;
-          height: 28px;
-          font-size: 12px;
-        }
-
-        .modal-body {
-          padding: 0 !important;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .modal-xl {
-          margin: 10px;
-        }
-
-        .step-item {
-          padding: 15px;
-        }
-      }
-      footer {
-        background-color: var(--dark);
-        color: white;
-        padding: 30px 0;
-        margin-top: 50px;
-      }
-
-      .page-content {
-        min-height: calc(100vh - 200px);
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <i class="bi bi-hdd-network me-2"></i>TechSolutions SARL
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="architecture.html">Architecture</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="configuration.html">Configuration</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="services.html">Services VM</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="tests.html">Tests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="commands.html">Commandes</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container page-content">
-      <h1 class="section-title">Services Virtualisés</h1>
-
-      <div class="card card-custom">
-        <div class="card-header card-header-custom">
-          <h3 class="mb-0">
-            <i class="bi bi-server me-2"></i>Vue d'Ensemble des Services
-          </h3>
-        </div>
-        <div class="card-body">
-          <p>
-            Chaque département dispose d'une machine virtuelle dédiée hébergeant
-            les services spécifiques à ses besoins. Cette approche permet une
-            gestion centralisée, une haute disponibilité et une scalabilité
-            optimale.
-          </p>
-
-          <div class="table-responsive">
-            <table class="table table-custom">
-              <thead>
-                <tr>
-                  <th>Département</th>
-                  <th>Service VM</th>
-                  <th>Adresse IP</th>
-                  <th>Rôle Principal</th>
-                  <th>Statut</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Web/Marketing</strong></td>
-                  <td>Apache/Nginx</td>
-                  <td>172.24.0.5</td>
-                  <td>Serveur Web (HTTP/HTTPS)</td>
-                  <td>
-                    <span class="service-status status-running"
-                      >En fonctionnement</span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>IT</strong></td>
-                  <td>Zabbix</td>
-                  <td>172.24.64.5</td>
-                  <td>Supervision du réseau et des services</td>
-                  <td>
-                    <span class="service-status status-running"
-                      >En fonctionnement</span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Base de Données</strong></td>
-                  <td>MySQL/PostgreSQL</td>
-                  <td>172.24.72.5</td>
-                  <td>Base de données centralisée</td>
-                  <td>
-                    <span class="service-status status-running"
-                      >En fonctionnement</span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>NFS</strong></td>
-                  <td>NFS Server</td>
-                  <td>172.24.74.5</td>
-                  <td>Partage de fichiers en réseau</td>
-                  <td>
-                    <span class="service-status status-running"
-                      >En fonctionnement</span
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <h2 class="section-title">Détails des Services par Département</h2>
-
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <div
-            class="service-card"
-            onclick="showConfig('web')"
-            style="cursor: pointer"
-            data-service="web"
-            data-ip="172.24.0.5"
-            data-vlan="10"
-            data-script="web-server.sh"
-          >
-            <i class="bi bi-globe service-icon"></i>
-            <h4>Web/Marketing</h4>
-            <p class="text-muted">Serveur Web Apache/Nginx</p>
-            <div class="service-status status-running mb-3">
-              En fonctionnement
-            </div>
-            <p>
-              Hébergement des sites web corporate et applications marketing.
-              Configuration optimisée pour les performances et la sécurité.
-            </p>
-            <ul class="list-unstyled text-start">
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Support
-                HTTP/2
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Certificats
-                SSL/TLS
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Cache
-                optimisé
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Load
-                balancing
-              </li>
-            </ul>
-            <div class="mt-3">
-              <small class="text-muted">IP: 172.24.0.5 | VLAN: 10</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-          <div
-            class="service-card"
-            onclick="showConfig('monitoring')"
-            style="cursor: pointer"
-            data-service="monitoring"
-            data-ip="172.24.64.5"
-            data-vlan="20"
-            data-script="monitoring-server.sh"
-          >
-            <i class="bi bi-graph-up service-icon"></i>
-            <h4>IT - Supervision</h4>
-            <p class="text-muted">Zabbix Monitoring</p>
-            <div class="service-status status-running mb-3">
-              En fonctionnement
-            </div>
-            <p>
-              Surveillance en temps réel de l'ensemble de l'infrastructure
-              réseau, serveurs et services. Alertes et rapports automatiques.
-            </p>
-            <ul class="list-unstyled text-start">
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Monitoring
-                24/7
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Alertes
-                personnalisées
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Tableaux de
-                bord
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Rapports
-                automatiques
-              </li>
-            </ul>
-            <div class="mt-3">
-              <small class="text-muted">IP: 172.24.64.5 | VLAN: 20</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-          <div
-            class="service-card"
-            onclick="showConfig('database')"
-            style="cursor: pointer"
-            data-service="database"
-            data-ip="172.24.72.5"
-            data-vlan="30"
-            data-script="database-server.sh"
-          >
-            <i class="bi bi-database service-icon"></i>
-            <h4>Base de Données</h4>
-            <p class="text-muted">MySQL/PostgreSQL</p>
-            <div class="service-status status-running mb-3">
-              En fonctionnement
-            </div>
-            <p>
-              Base de données centralisée pour l'ensemble des applications
-              métier. Haute disponibilité et sauvegardes automatiques.
-            </p>
-            <ul class="list-unstyled text-start">
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Réplication
-                maître-esclave
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Sauvegardes
-                automatiques
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Chiffrement
-                des données
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Contrôle
-                d'accès granulaire
-              </li>
-            </ul>
-            <div class="mt-3">
-              <small class="text-muted">IP: 172.24.72.5 | VLAN: 30</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-          <div
-            class="service-card"
-            onclick="showConfig('nfs')"
-            style="cursor: pointer"
-            data-service="nfs"
-            data-ip="172.24.74.5"
-            data-vlan="40"
-            data-script="nfs-server.sh"
-          >
-            <i class="bi bi-folder service-icon"></i>
-            <h4>NFS - Partage Fichiers</h4>
-            <p class="text-muted">NFS Server</p>
-            <div class="service-status status-running mb-3">
-              En fonctionnement
-            </div>
-            <p>
-              Service de partage de fichiers centralisé pour l'ensemble des
-              départements. Accès sécurisé et quotas par utilisateur.
-            </p>
-            <ul class="list-unstyled text-start">
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Partage
-                multi-protocoles
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Quotas par
-                utilisateur
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Snapshots
-                automatiques
-              </li>
-              <li>
-                <i class="bi bi-check-circle text-success me-2"></i> Réplication
-                vers backup
-              </li>
-            </ul>
-            <div class="mt-3">
-              <small class="text-muted">IP: 172.24.74.5 | VLAN: 40</small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Add this modal structure after the row div closing tag -->
-      <!-- Configuration Modal -->
-      <div
-        class="modal fade"
-        id="configModal"
-        tabindex="-1"
-        aria-labelledby="configModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-          <div class="modal-content border-0">
-            <!-- En-tête du modal -->
-            <div class="modal-header gradient-header p-4">
-              <div class="d-flex align-items-center">
-                <div class="service-icon-modal me-3" id="modalServiceIcon">
-                  <i class="bi bi-gear"></i>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Services VM - TechSolutions SARL</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <style>
+            /* Same CSS as in the main file */
+            :root {
+                --primary: #2c3e50;
+                --secondary: #3498db;
+                --accent: #e74c3c;
+                --light: #ecf0f1;
+                --dark: #2c3e50;
+                --success: #2ecc71;
+                --warning: #f39c12;
+                --info: #17a2b8;
+            }
+
+            body {
+                background-color: #f8f9fa;
+                padding-top: 70px;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .navbar {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-brand {
+                font-weight: 700;
+                color: var(--secondary) !important;
+            }
+
+            .nav-link {
+                font-weight: 500;
+                transition: all 0.3s;
+                border-radius: 4px;
+                margin: 0 2px;
+            }
+
+            .nav-link:hover,
+            .nav-link.active {
+                background-color: rgba(52, 152, 219, 0.1);
+                color: var(--secondary) !important;
+            }
+
+            .section-title {
+                margin-top: 40px;
+                margin-bottom: 25px;
+                font-weight: 700;
+                color: var(--primary);
+                position: relative;
+                padding-bottom: 10px;
+            }
+
+            .section-title:after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 4px;
+                background-color: var(--secondary);
+                border-radius: 2px;
+            }
+
+            .card-custom {
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                transition: transform 0.3s, box-shadow 0.3s;
+                margin-bottom: 30px;
+                overflow: hidden;
+            }
+
+            .card-header-custom {
+                background-color: var(--primary);
+                color: white;
+                padding: 15px 20px;
+                border-bottom: none;
+            }
+
+            .service-card {
+                text-align: center;
+                padding: 20px;
+                height: 100%;
+                border-radius: 12px;
+                background-color: white;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+                transition: all 0.3s;
+            }
+
+            .service-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            }
+
+            .service-icon {
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 15px;
+            }
+
+            .service-status {
+                display: inline-block;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+
+            .status-running {
+                background-color: rgba(46, 204, 113, 0.2);
+                color: var(--success);
+            }
+
+            .status-stopped {
+                background-color: rgba(231, 76, 60, 0.2);
+                color: var(--accent);
+            }
+
+            .table-custom {
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            }
+
+            .table-custom thead th {
+                background-color: var(--primary);
+                color: white;
+                border: none;
+                padding: 15px;
+            }
+
+            .table-custom tbody td {
+                padding: 12px 15px;
+                border-color: #e9ecef;
+            }
+
+            .table-custom tbody tr:hover {
+                background-color: rgba(52, 152, 219, 0.05);
+            }
+
+            /* Modal Styles */
+            .modal-xl {
+                max-width: 1200px;
+            }
+
+            .modal-content {
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
+
+            .gradient-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-bottom: none;
+            }
+
+            .service-icon-modal {
+                width: 60px;
+                height: 60px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                backdrop-filter: blur(10px);
+            }
+
+            /* Timeline Steps */
+            .timeline-steps {
+                position: relative;
+                padding-left: 30px;
+            }
+
+            .timeline-steps::before {
+                content: "";
+                position: absolute;
+                left: 15px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: linear-gradient(to bottom, #667eea, #764ba2);
+            }
+
+            .step-item {
+                position: relative;
+                margin-bottom: 30px;
+                padding: 20px;
+                background: #fff;
+                border-radius: 16px;
+                border: 1px solid #e9ecef;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+
+            .step-item:hover {
+                transform: translateX(5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                border-left: 4px solid #667eea;
+            }
+
+            .step-number {
+                position: absolute;
+                left: -40px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 32px;
+                height: 32px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 14px;
+                z-index: 2;
+            }
+
+            .step-content {
+                margin-left: 10px;
+            }
+
+            .step-title {
+                color: #2d3748;
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 15px;
+            }
+
+            .step-command {
+                background: #f8f9fa;
+                border-radius: 12px;
+                padding: 12px;
+                border-left: 3px solid #667eea;
+                margin-top: 10px;
+                position: relative;
+            }
+
+            .step-command pre {
+                margin: 0;
+                font-family: "Courier New", monospace;
+                font-size: 13px;
+                color: #2d3748;
+            }
+
+            .copy-btn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background: rgba(102, 126, 234, 0.1);
+                border: none;
+                color: #667eea;
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .copy-btn:hover {
+                background: #667eea;
+                color: white;
+            }
+
+            /* Service Info Card */
+            .service-info-card {
+                background: white;
+                padding: 20px;
+                border-radius: 16px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            .info-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #f1f3f4;
+            }
+
+            .info-item:last-child {
+                margin-bottom: 0;
+                border-bottom: none;
+            }
+
+            .info-icon {
+                width: 36px;
+                height: 36px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                margin-right: 12px;
+            }
+
+            .info-content h6 {
+                font-size: 13px;
+                color: #6b7280;
+                margin: 0;
+            }
+
+            .info-content p {
+                font-size: 14px;
+                font-weight: 600;
+                color: #2d3748;
+                margin: 0;
+            }
+
+            /* Download Button */
+            .download-btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+                border-radius: 12px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .download-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: 0.5s;
+            }
+
+            .download-btn:hover::before {
+                left: 100%;
+            }
+
+            .download-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+
+            /* Quick Commands */
+            .quick-command {
+                background: white;
+                border: 1px solid #e9ecef;
+                border-radius: 12px;
+                padding: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .quick-command:hover {
+                background: #f8f9ff;
+                border-color: #667eea;
+            }
+
+            .quick-command pre {
+                margin: 0;
+                font-size: 12px;
+                color: #2d3748;
+                font-family: "Courier New", monospace;
+            }
+
+            .quick-command small {
+                color: #6b7280;
+                font-size: 11px;
+            }
+
+            /* Progress Indicator */
+            .progress-indicator {
+                height: 6px;
+                background: #e9ecef;
+                border-radius: 3px;
+                overflow: hidden;
+                margin-top: 5px;
+            }
+
+            .progress-bar {
+                height: 100%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                border-radius: 3px;
+                transition: width 0.3s ease;
+            }
+
+            /* Responsive */
+            @media (max-width: 992px) {
+                .timeline-steps::before {
+                    left: 10px;
+                }
+
+                .step-number {
+                    left: -35px;
+                    width: 28px;
+                    height: 28px;
+                    font-size: 12px;
+                }
+
+                .modal-body {
+                    padding: 0 !important;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .modal-xl {
+                    margin: 10px;
+                }
+
+                .step-item {
+                    padding: 15px;
+                }
+            }
+            footer {
+                background-color: var(--dark);
+                color: white;
+                padding: 30px 0;
+                margin-top: 50px;
+            }
+
+            .page-content {
+                min-height: calc(100vh - 200px);
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"> <i class="bi bi-hdd-network me-2"></i>TechSolutions SARL </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="architecture.html">Architecture</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="configuration.html">Configuration</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="services.html">Services VM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tests.html">Tests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="commands.html">Commandes</a>
+                        </li>
+                    </ul>
                 </div>
-                <div>
-                  <h5 class="modal-title text-white mb-1" id="configModalLabel">
-                    Étapes de configuration
-                  </h5>
-                  <p class="text-white-50 mb-0 small" id="modalSubtitle"></p>
-                </div>
-              </div>
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Fermer"
-              ></button>
             </div>
+        </nav>
 
-            <!-- Corps du modal -->
-            <div class="modal-body p-0">
-              <div class="container-fluid p-0">
-                <div class="row g-0">
-                  <!-- Colonne gauche - Étapes -->
-                  <div class="col-lg-8">
-                    <div class="p-4">
-                      <div
-                        class="d-flex justify-content-between align-items-center mb-4"
-                      >
-                        <h6 class="mb-0 text-primary fw-bold">
-                          Configuration étape par étape
-                        </h6>
-                        <span
-                          class="badge bg-primary-subtle text-primary rounded-pill"
-                          id="stepsCount"
-                        >
-                          10 étapes
-                        </span>
-                      </div>
+        <div class="container page-content">
+            <h1 class="section-title">Services Virtualisés</h1>
 
-                      <div class="timeline-steps" id="stepsContent">
-                        <!-- Les étapes seront chargées ici -->
-                      </div>
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h3 class="mb-0"><i class="bi bi-server me-2"></i>Vue d'Ensemble des Services</h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Chaque département dispose d'une machine virtuelle dédiée hébergeant les services spécifiques à ses besoins. Cette
+                        approche permet une gestion centralisée, une haute disponibilité et une scalabilité optimale.
+                    </p>
 
-                      <div class="mt-4 pt-3 border-top">
-                        <h6 class="mb-3 text-primary fw-bold">
-                          Commandes rapides
-                        </h6>
-                        <div class="row g-2" id="quickCommands">
-                          <!-- Les commandes rapides seront chargées ici -->
-                        </div>
-                      </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Département</th>
+                                    <th>Service VM</th>
+                                    <th>Adresse IP</th>
+                                    <th>Rôle Principal</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Web/Marketing</strong></td>
+                                    <td>Apache/Nginx</td>
+                                    <td>172.24.0.5</td>
+                                    <td>Serveur Web (HTTP/HTTPS)</td>
+                                    <td>
+                                        <span class="service-status status-running">En fonctionnement</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IT</strong></td>
+                                    <td>Grafana & Prometheus</td>
+                                    <td>172.24.64.5</td>
+                                    <td>Supervision du réseau et des services</td>
+                                    <td>
+                                        <span class="service-status status-running">En fonctionnement</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Base de Données</strong></td>
+                                    <td>MySQL/PostgreSQL</td>
+                                    <td>172.24.72.5</td>
+                                    <td>Base de données centralisée</td>
+                                    <td>
+                                        <span class="service-status status-running">En fonctionnement</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NFS</strong></td>
+                                    <td>NFS Server</td>
+                                    <td>172.24.74.5</td>
+                                    <td>Partage de fichiers en réseau</td>
+                                    <td>
+                                        <span class="service-status status-running">En fonctionnement</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                  </div>
+                </div>
+            </div>
 
-                  <!-- Colonne droite - Infos & Actions -->
-                  <div class="col-lg-4 bg-light">
-                    <div class="p-4 h-100">
-                      <div class="service-info-card mb-4">
-                        <h6 class="mb-3 text-primary fw-bold">
-                          <i class="bi bi-info-circle me-2"></i>
-                          Informations du service
-                        </h6>
-                        <div id="quickInfo">
-                          <!-- Les informations rapides seront chargées ici -->
-                        </div>
-                      </div>
+            <h2 class="section-title">Détails des Services par Département</h2>
 
-                      <div class="actions-card">
-                        <h6 class="mb-3 text-primary fw-bold">
-                          <i class="bi bi-download me-2"></i>
-                          Télécharger le script
-                        </h6>
-                        <p class="text-muted small mb-3">
-                          Téléchargez un script d’installation prêt à l’emploi
-                          pour Ubuntu Server 22.04 / 24.04
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div
+                        class="service-card"
+                        onclick="showConfig('web')"
+                        style="cursor: pointer"
+                        data-service="web"
+                        data-ip="172.24.0.5"
+                        data-vlan="10"
+                        data-script="web-server.sh"
+                    >
+                        <i class="bi bi-globe service-icon"></i>
+                        <h4>Web/Marketing</h4>
+                        <p class="text-muted">Serveur Web Apache/Nginx</p>
+                        <div class="service-status status-running mb-3">En fonctionnement</div>
+                        <p>
+                            Hébergement des sites web corporate et applications marketing. Configuration optimisée pour les performances et
+                            la sécurité.
                         </p>
-
-                        <button
-                          id="downloadScriptBtn"
-                          class="btn btn-primary w-100 py-3 mb-3 download-btn"
-                        >
-                          <i class="bi bi-file-earmark-code me-2"></i>
-                          <span>Télécharger le script d’installation</span>
-                        </button>
-
-                        <div class="d-flex gap-2">
-                          <button
-                            class="btn btn-outline-primary flex-fill"
-                            id="copyCommandsBtn"
-                          >
-                            <i class="bi bi-clipboard me-1"></i>
-                            Copier les commandes
-                          </button>
-                          <button
-                            class="btn btn-outline-secondary flex-fill"
-                            id="printGuideBtn"
-                          >
-                            <i class="bi bi-printer me-1"></i>
-                            Imprimer le guide
-                          </button>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Support HTTP/2</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Certificats SSL/TLS</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Cache optimisé</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Load balancing</li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">IP: 172.24.0.5 | VLAN: 10</small>
                         </div>
-
-                        <div class="mt-4 pt-3 border-top">
-                          <small class="text-muted">
-                            <i class="bi bi-shield-check me-1"></i>
-                            Le script inclut des configurations de sécurité et
-                            des bonnes pratiques
-                          </small>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- Pied du modal -->
-            <div class="modal-footer bg-light border-top">
-              <div
-                class="w-100 d-flex justify-content-between align-items-center"
-              >
-                <div>
-                  <span class="text-muted small">
-                    <i class="bi bi-clock me-1"></i>
-                    Temps estimé d’installation :
-                    <span id="estimatedTime">15–20 minutes</span>
-                  </span>
+                <div class="col-md-6 mb-4">
+                    <div
+                        class="service-card"
+                        onclick="showConfig('monitoring')"
+                        style="cursor: pointer"
+                        data-service="monitoring"
+                        data-ip="172.24.64.5"
+                        data-vlan="20"
+                        data-script="monitoring-server.sh"
+                    >
+                        <i class="bi bi-graph-up service-icon"></i>
+                        <h4>IT - Supervision</h4>
+                        <p class="text-muted">Grafana & Prometheus Monitoring</p>
+                        <div class="service-status status-running mb-3">En fonctionnement</div>
+                        <p>
+                            Surveillance en temps réel de l'ensemble de l'infrastructure réseau, serveurs et services. Alertes et rapports
+                            automatiques.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Monitoring 24/7</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Alertes personnalisées</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Tableaux de bord</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Rapports automatiques</li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">IP: 172.24.64.5 | VLAN: 20</small>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary me-2"
-                    data-bs-dismiss="modal"
-                  >
-                    Fermer
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    id="startInstallBtn"
-                  >
-                    <i class="bi bi-play-circle me-1"></i>
-                    Démarrer l’installation
-                  </button>
+
+                <div class="col-md-6 mb-4">
+                    <div
+                        class="service-card"
+                        onclick="showConfig('database')"
+                        style="cursor: pointer"
+                        data-service="database"
+                        data-ip="172.24.72.5"
+                        data-vlan="30"
+                        data-script="database-server.sh"
+                    >
+                        <i class="bi bi-database service-icon"></i>
+                        <h4>Base de Données</h4>
+                        <p class="text-muted">MySQL/PostgreSQL</p>
+                        <div class="service-status status-running mb-3">En fonctionnement</div>
+                        <p>
+                            Base de données centralisée pour l'ensemble des applications métier. Haute disponibilité et sauvegardes
+                            automatiques.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Réplication maître-esclave</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Sauvegardes automatiques</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Chiffrement des données</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Contrôle d'accès granulaire</li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">IP: 172.24.72.5 | VLAN: 30</small>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="card card-custom mt-4">
-        <div class="card-header card-header-custom">
-          <h4 class="mb-0">
-            <i class="bi bi-lightning-charge me-2"></i>Avantages de la
-            Virtualisation
-          </h4>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-4 text-center mb-4">
-              <i class="bi bi-arrow-repeat display-4 text-primary"></i>
-              <h5 class="mt-2">Haute Disponibilité</h5>
-              <p>
-                Migration à chaud et redémarrage automatique en cas de panne
-              </p>
+                <div class="col-md-6 mb-4">
+                    <div
+                        class="service-card"
+                        onclick="showConfig('nfs')"
+                        style="cursor: pointer"
+                        data-service="nfs"
+                        data-ip="172.24.74.5"
+                        data-vlan="40"
+                        data-script="nfs-server.sh"
+                    >
+                        <i class="bi bi-folder service-icon"></i>
+                        <h4>NFS - Partage Fichiers</h4>
+                        <p class="text-muted">NFS Server</p>
+                        <div class="service-status status-running mb-3">En fonctionnement</div>
+                        <p>
+                            Service de partage de fichiers centralisé pour l'ensemble des départements. Accès sécurisé et quotas par
+                            utilisateur.
+                        </p>
+                        <ul class="list-unstyled text-start">
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Partage multi-protocoles</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Quotas par utilisateur</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Snapshots automatiques</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i> Réplication vers backup</li>
+                        </ul>
+                        <div class="mt-3">
+                            <small class="text-muted">IP: 172.24.74.5 | VLAN: 40</small>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4 text-center mb-4">
-              <i class="bi bi-box-arrow-in-down display-4 text-primary"></i>
-              <h5 class="mt-2">Sauvegardes Simplifiées</h5>
-              <p>
-                Snapshots complets et restauration rapide des machines
-                virtuelles
-              </p>
-            </div>
-            <div class="col-md-4 text-center mb-4">
-              <i class="bi bi-graph-up-arrow display-4 text-primary"></i>
-              <h5 class="mt-2">Scalabilité</h5>
-              <p>
-                Ajout facile de ressources (CPU, RAM, stockage) selon les
-                besoins
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <!-- Add this modal structure after the row div closing tag -->
+            <!-- Configuration Modal -->
+            <div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content border-0">
+                        <!-- En-tête du modal -->
+                        <div class="modal-header gradient-header p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="service-icon-modal me-3" id="modalServiceIcon">
+                                    <i class="bi bi-gear"></i>
+                                </div>
+                                <div>
+                                    <h5 class="modal-title text-white mb-1" id="configModalLabel">Étapes de configuration</h5>
+                                    <p class="text-white-50 mb-0 small" id="modalSubtitle"></p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                        </div>
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <h5><i class="bi bi-hdd-network me-2"></i>TechSolutions SARL</h5>
-            <p>Infrastructure Réseau & Services</p>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <p class="mb-0">Documentation Interactive</p>
-            <p class="mb-0">&copy; 2025 Tous droits réservés</p>
-          </div>
-        </div>
-      </div>
-    </footer>
+                        <!-- Corps du modal -->
+                        <div class="modal-body p-0">
+                            <div class="container-fluid p-0">
+                                <div class="row g-0">
+                                    <!-- Colonne gauche - Étapes -->
+                                    <div class="col-lg-8">
+                                        <div class="p-4">
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <h6 class="mb-0 text-primary fw-bold">Configuration étape par étape</h6>
+                                                <span class="badge bg-primary-subtle text-primary rounded-pill" id="stepsCount">
+                                                    10 étapes
+                                                </span>
+                                            </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/services.js"></script>
-  </body>
+                                            <div class="timeline-steps" id="stepsContent">
+                                                <!-- Les étapes seront chargées ici -->
+                                            </div>
+
+                                            <div class="mt-4 pt-3 border-top">
+                                                <h6 class="mb-3 text-primary fw-bold">Commandes rapides</h6>
+                                                <div class="row g-2" id="quickCommands">
+                                                    <!-- Les commandes rapides seront chargées ici -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Colonne droite - Infos & Actions -->
+                                    <div class="col-lg-4 bg-light">
+                                        <div class="p-4 h-100">
+                                            <div class="service-info-card mb-4">
+                                                <h6 class="mb-3 text-primary fw-bold">
+                                                    <i class="bi bi-info-circle me-2"></i>
+                                                    Informations du service
+                                                </h6>
+                                                <div id="quickInfo">
+                                                    <!-- Les informations rapides seront chargées ici -->
+                                                </div>
+                                            </div>
+
+                                            <div class="actions-card">
+                                                <h6 class="mb-3 text-primary fw-bold">
+                                                    <i class="bi bi-download me-2"></i>
+                                                    Télécharger le script
+                                                </h6>
+                                                <p class="text-muted small mb-3">
+                                                    Téléchargez un script d’installation prêt à l’emploi pour Ubuntu Server 22.04 / 24.04
+                                                </p>
+
+                                                <button id="downloadScriptBtn" class="btn btn-primary w-100 py-3 mb-3 download-btn">
+                                                    <i class="bi bi-file-earmark-code me-2"></i>
+                                                    <span>Télécharger le script d’installation</span>
+                                                </button>
+
+                                                <div class="d-flex gap-2">
+                                                    <button class="btn btn-outline-primary flex-fill" id="copyCommandsBtn">
+                                                        <i class="bi bi-clipboard me-1"></i>
+                                                        Copier les commandes
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary flex-fill" id="printGuideBtn">
+                                                        <i class="bi bi-printer me-1"></i>
+                                                        Imprimer le guide
+                                                    </button>
+                                                </div>
+
+                                                <div class="mt-4 pt-3 border-top">
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-shield-check me-1"></i>
+                                                        Le script inclut des configurations de sécurité et des bonnes pratiques
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pied du modal -->
+                        <div class="modal-footer bg-light border-top">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-clock me-1"></i>
+                                        Temps estimé d’installation :
+                                        <span id="estimatedTime">15–20 minutes</span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-primary" id="startInstallBtn">
+                                        <i class="bi bi-play-circle me-1"></i>
+                                        Démarrer l’installation
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom mt-4">
+                <div class="card-header card-header-custom">
+                    <h4 class="mb-0"><i class="bi bi-lightning-charge me-2"></i>Avantages de la Virtualisation</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-arrow-repeat display-4 text-primary"></i>
+                            <h5 class="mt-2">Haute Disponibilité</h5>
+                            <p>Migration à chaud et redémarrage automatique en cas de panne</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-box-arrow-in-down display-4 text-primary"></i>
+                            <h5 class="mt-2">Sauvegardes Simplifiées</h5>
+                            <p>Snapshots complets et restauration rapide des machines virtuelles</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-graph-up-arrow display-4 text-primary"></i>
+                            <h5 class="mt-2">Scalabilité</h5>
+                            <p>Ajout facile de ressources (CPU, RAM, stockage) selon les besoins</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-hdd-network me-2"></i>TechSolutions SARL</h5>
+                        <p>Infrastructure Réseau & Services</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0">Documentation Interactive</p>
+                        <p class="mb-0">&copy; 2025 Tous droits réservés</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="scripts/services.js"></script>
+    </body>
 </html>
