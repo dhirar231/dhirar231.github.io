@@ -1,5 +1,6 @@
-// Configuration data with enhanced details
+// Configuration data for each service
 const configData = {
+
   web: {
   "title": "Configuration du serveur Web/Marketing",
   "subtitle": "Pile Apache2 + Nginx + PHP + MySQL",
