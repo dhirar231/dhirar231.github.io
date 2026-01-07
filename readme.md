@@ -10,9 +10,9 @@ Documentation complète et interactive de l'infrastructure réseau déployée po
 
 ### Topologie
 
-- Backbone totalement maillé pour une redondance maximale
-- 4 routeurs principaux interconnectant les départements
-- Segmentation par VLAN pour l'isolation des services
+-   Backbone totalement maillé pour une redondance maximale
+-   4 routeurs principaux interconnectant les départements
+-   Segmentation par VLAN pour l'isolation des services
 
 ### Routeurs Principaux
 
@@ -56,10 +56,10 @@ techsolutions-network/
 
 ## 🛠️ Technologies Utilisées
 
-- **Frontend:** HTML5, CSS3, Bootstrap 5.3.2
-- **Icons:** Bootstrap Icons 1.11.0
-- **Design:** CSS Custom Properties, Responsive Design
-- **Documentation:** Markdown
+-   **Frontend:** HTML5, CSS3, Bootstrap 5.3.2
+-   **Icons:** Bootstrap Icons 1.11.0
+-   **Design:** CSS Custom Properties, Responsive Design
+-   **Documentation:** Markdown
 
 ---
 
@@ -67,24 +67,24 @@ techsolutions-network/
 
 ### 🎨 Interface Moderne
 
-- Design responsive et accessible
-- Navigation intuitive avec indicateurs d'état actif
-- Cartes interactives avec effets de survol
-- Schémas réseau visuels
+-   Design responsive et accessible
+-   Navigation intuitive avec indicateurs d'état actif
+-   Cartes interactives avec effets de survol
+-   Schémas réseau visuels
 
 ### 📊 Contenu Détaillé
 
-- Architecture réseau complète avec diagrammes
-- Tables de configuration détaillées
-- Résultats de tests avec métriques de performance
-- Commandes de configuration avec coloration syntaxique
+-   Architecture réseau complète avec diagrammes
+-   Tables de configuration détaillées
+-   Résultats de tests avec métriques de performance
+-   Commandes de configuration avec coloration syntaxique
 
 ### 🔧 Organisation Technique
 
-- Onglets pour navigation dans les commandes
-- Badges de statut colorés
-- Progress bars pour les métriques de performance
-- Alertes contextuelles informatives
+-   Onglets pour navigation dans les commandes
+-   Badges de statut colorés
+-   Progress bars pour les métriques de performance
+-   Alertes contextuelles informatives
 
 ---
 
@@ -103,21 +103,21 @@ techsolutions-network/
 
 ### ✅ Connectivité
 
-- Ping inter-routeurs: 100% de succès
-- Connectivité clients-serveurs: 100% de succès
-- Accès Internet via NAT: 100% de succès
+-   Ping inter-routeurs: 100% de succès
+-   Connectivité clients-serveurs: 100% de succès
+-   Accès Internet via NAT: 100% de succès
 
 ### ⚡ Performance
 
-- Débit réseau local: 950 Mbps en moyenne
-- Latence inter-routeurs: 1.2 ms en moyenne
-- Convergence OSPF: 3.5 secondes
+-   Débit réseau local: 950 Mbps en moyenne
+-   Latence inter-routeurs: 1.2 ms en moyenne
+-   Convergence OSPF: 3.5 secondes
 
 ### 🔒 Sécurité
 
-- Politiques inter-VLAN: Correctement appliquées
-- Authentification: Configurée sur tous les équipements
-- Monitoring: Actif 24/7 via Zabbix
+-   Politiques inter-VLAN: Correctement appliquées
+-   Authentification: Configurée sur tous les équipements
+-   Monitoring: Actif 24/7 via Zabbix
 
 ---
 
@@ -132,21 +132,21 @@ cd techsolutions-network
 
 ### Ouverture
 
-- Ouvrir `index.html` dans un navigateur web
-- Naviguer entre les pages via le menu de navigation
+-   Ouvrir `index.html` dans un navigateur web
+-   Naviguer entre les pages via le menu de navigation
 
 ### Navigation
 
-- Utiliser le menu supérieur pour accéder aux différentes sections
-- Les liens internes permettent une navigation fluide entre les pages
+-   Utiliser le menu supérieur pour accéder aux différentes sections
+-   Les liens internes permettent une navigation fluide entre les pages
 
 ---
 
 ## 📋 Prérequis
 
-- Navigateur web moderne (Chrome, Firefox, Safari, Edge)
-- Connexion Internet pour charger Bootstrap et les icônes
-- Résolution d'écran recommandée: 1024x768 ou supérieure
+-   Navigateur web moderne (Chrome, Firefox, Safari, Edge)
+-   Connexion Internet pour charger Bootstrap et les icônes
+-   Résolution d'écran recommandée: 1280x720 ou supérieure
 
 ---
 
@@ -156,11 +156,11 @@ Le design utilise des variables CSS pour une personnalisation facile :
 
 ```css
 :root {
-  --primary: #2c3e50;
-  --secondary: #3498db;
-  --accent: #e74c3c;
-  --success: #2ecc71;
-  --warning: #f39c12;
-  --info: #17a2b8;
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --info: #17a2b8;
 }
 ```
