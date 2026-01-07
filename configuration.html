@@ -1,487 +1,422 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Configuration Réseau - TechSolutions SARL</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <style>
-      .clickable-card {
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      .clickable-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      .modal-dialog-scrollable .modal-body {
-        max-height: 70vh;
-        overflow-y: auto;
-      }
-      .nav-pills .nav-link.active {
-        background-color: #0d6efd;
-        color: white !important;
-      }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Configuration Réseau - TechSolutions SARL</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <style>
+            .clickable-card {
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .clickable-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            .modal-dialog-scrollable .modal-body {
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+            .nav-pills .nav-link.active {
+                background-color: #0d6efd;
+                color: white !important;
+            }
 
-      /* Same CSS as in the main file */
-      :root {
-        --primary: #2c3e50;
-        --secondary: #3498db;
-        --accent: #e74c3c;
-        --light: #ecf0f1;
-        --dark: #2c3e50;
-        --success: #2ecc71;
-        --warning: #f39c12;
-        --info: #17a2b8;
-      }
+            /* Same CSS as in the main file */
+            :root {
+                --primary: #2c3e50;
+                --secondary: #3498db;
+                --accent: #e74c3c;
+                --light: #ecf0f1;
+                --dark: #2c3e50;
+                --success: #2ecc71;
+                --warning: #f39c12;
+                --info: #17a2b8;
+            }
 
-      body {
-        background-color: #f8f9fa;
-        padding-top: 70px;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
+            body {
+                background-color: #f8f9fa;
+                padding-top: 70px;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
 
-      .navbar {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
+            .navbar {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
 
-      .navbar-brand {
-        font-weight: 700;
-        color: var(--secondary) !important;
-      }
+            .navbar-brand {
+                font-weight: 700;
+                color: var(--secondary) !important;
+            }
 
-      .nav-link {
-        font-weight: 500;
-        transition: all 0.3s;
-        border-radius: 4px;
-        margin: 0 2px;
-      }
+            .nav-link {
+                font-weight: 500;
+                transition: all 0.3s;
+                border-radius: 4px;
+                margin: 0 2px;
+            }
 
-      .nav-link:hover,
-      .nav-link.active {
-        background-color: rgba(52, 152, 219, 0.1);
-        color: var(--secondary) !important;
-      }
+            .nav-link:hover,
+            .nav-link.active {
+                background-color: rgba(52, 152, 219, 0.1);
+                color: var(--secondary) !important;
+            }
 
-      .section-title {
-        margin-top: 40px;
-        margin-bottom: 25px;
-        font-weight: 700;
-        color: var(--primary);
-        position: relative;
-        padding-bottom: 10px;
-      }
+            .section-title {
+                margin-top: 40px;
+                margin-bottom: 25px;
+                font-weight: 700;
+                color: var(--primary);
+                position: relative;
+                padding-bottom: 10px;
+            }
 
-      .section-title:after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 4px;
-        background-color: var(--secondary);
-        border-radius: 2px;
-      }
+            .section-title:after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 4px;
+                background-color: var(--secondary);
+                border-radius: 2px;
+            }
 
-      .card-custom {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s, box-shadow 0.3s;
-        margin-bottom: 30px;
-        overflow: hidden;
-      }
+            .card-custom {
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                transition: transform 0.3s, box-shadow 0.3s;
+                margin-bottom: 30px;
+                overflow: hidden;
+            }
 
-      .card-header-custom {
-        background-color: var(--primary);
-        color: white;
-        padding: 15px 20px;
-        border-bottom: none;
-      }
+            .card-header-custom {
+                background-color: var(--primary);
+                color: white;
+                padding: 15px 20px;
+                border-bottom: none;
+            }
 
-      .table-custom {
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-      }
+            .table-custom {
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            }
 
-      .table-custom thead th {
-        background-color: var(--primary);
-        color: white;
-        border: none;
-        padding: 15px;
-      }
+            .table-custom thead th {
+                background-color: var(--primary);
+                color: white;
+                border: none;
+                padding: 15px;
+            }
 
-      .table-custom tbody td {
-        padding: 12px 15px;
-        border-color: #e9ecef;
-      }
+            .table-custom tbody td {
+                padding: 12px 15px;
+                border-color: #e9ecef;
+            }
 
-      .table-custom tbody tr:hover {
-        background-color: rgba(52, 152, 219, 0.05);
-      }
+            .table-custom tbody tr:hover {
+                background-color: rgba(52, 152, 219, 0.05);
+            }
 
-      footer {
-        background-color: var(--dark);
-        color: white;
-        padding: 30px 0;
-        margin-top: 50px;
-      }
+            footer {
+                background-color: var(--dark);
+                color: white;
+                padding: 30px 0;
+                margin-top: 50px;
+            }
 
-      .page-content {
-        min-height: calc(100vh - 200px);
-      }
+            .page-content {
+                min-height: calc(100vh - 200px);
+            }
 
-      .config-badge {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
+            .config-badge {
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
 
-      .bg-area0 {
-        background-color: rgba(52, 152, 219, 0.2);
-        color: #2980b9;
-      }
+            .bg-area0 {
+                background-color: rgba(52, 152, 219, 0.2);
+                color: #2980b9;
+            }
 
-      .bg-vlan10 {
-        background-color: rgba(46, 204, 113, 0.2);
-        color: #27ae60;
-      }
+            .bg-vlan10 {
+                background-color: rgba(46, 204, 113, 0.2);
+                color: #27ae60;
+            }
 
-      .bg-vlan20 {
-        background-color: rgba(155, 89, 182, 0.2);
-        color: #8e44ad;
-      }
+            .bg-vlan20 {
+                background-color: rgba(155, 89, 182, 0.2);
+                color: #8e44ad;
+            }
 
-      .bg-vlan30 {
-        background-color: rgba(241, 196, 15, 0.2);
-        color: #f39c12;
-      }
+            .bg-vlan30 {
+                background-color: rgba(241, 196, 15, 0.2);
+                color: #f39c12;
+            }
 
-      .bg-vlan40 {
-        background-color: rgba(230, 126, 34, 0.2);
-        color: #d35400;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <i class="bi bi-hdd-network me-2"></i>TechSolutions SARL
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="architecture.html">Architecture</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="configuration.html"
-                >Configuration</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="services.html">Services VM</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="tests.html">Tests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="commands.html">Commandes</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container page-content">
-      <h1 class="section-title">Configuration du Réseau</h1>
-
-      <div class="card card-custom">
-        <div class="card-header card-header-custom">
-          <h3 class="mb-0">
-            <i class="bi bi-router me-2"></i>Plan d'Adressage IP
-          </h3>
-        </div>
-        <div class="card-body">
-          <p>
-            Le plan d'adressage utilise la technique VLSM (Variable Length
-            Subnet Mask) pour une allocation efficace des adresses IP selon les
-            besoins de chaque département.
-          </p>
-
-          <h5 class="mt-4">Configuration des Routeurs</h5>
-          <div class="table-responsive">
-            <table class="table table-custom">
-              <thead>
-                <tr>
-                  <th>Routeur</th>
-                  <th>Interface</th>
-                  <th>Adresse IP</th>
-                  <th>Masque</th>
-                  <th>Réseau</th>
-                  <th>Area OSPF</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>RZ1</strong> (Web)</td>
-                  <td>FastEthernet0/0</td>
-                  <td>172.24.0.1</td>
-                  <td>/18 (255.255.192.0)</td>
-                  <td>172.24.0.0/18</td>
-                  <td><span class="config-badge bg-area0">Area 0</span></td>
-                </tr>
-                <tr>
-                  <td><strong>RZ2</strong> (IT)</td>
-                  <td>FastEthernet0/0</td>
-                  <td>172.24.64.1</td>
-                  <td>/21 (255.255.248.0)</td>
-                  <td>172.24.64.0/21</td>
-                  <td><span class="config-badge bg-area0">Area 0</span></td>
-                </tr>
-                <tr>
-                  <td><strong>RZ3</strong> (DB)</td>
-                  <td>FastEthernet0/0</td>
-                  <td>172.24.72.1</td>
-                  <td>/23 (255.255.254.0)</td>
-                  <td>172.24.72.0/23</td>
-                  <td><span class="config-badge bg-area0">Area 0</span></td>
-                </tr>
-                <tr>
-                  <td><strong>RZ4</strong> (NFS)</td>
-                  <td>FastEthernet0/0</td>
-                  <td>172.24.74.1</td>
-                  <td>/24 (255.255.255.0)</td>
-                  <td>172.24.74.0/24</td>
-                  <td><span class="config-badge bg-area0">Area 0</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="alert alert-info mt-3">
-            <i class="bi bi-info-circle me-2"></i>
-            <strong>Note :</strong> Tous les routeurs participent à l'area 0
-            OSPF pour assurer une convergence rapide du routage.
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-custom h-100">
-            <div class="card-header card-header-custom">
-              <h4 class="mb-0">
-                <i class="bi bi-hdd-network me-2"></i>VLAN et DHCP
-              </h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-custom">
-                  <thead>
-                    <tr>
-                      <th>Département</th>
-                      <th>VLAN</th>
-                      <th>Plage DHCP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Web/Marketing</td>
-                      <td>
-                        <span class="config-badge bg-vlan10">VLAN 10</span>
-                      </td>
-                      <td>172.24.0.10 - 172.24.0.254</td>
-                    </tr>
-                    <tr>
-                      <td>IT</td>
-                      <td>
-                        <span class="config-badge bg-vlan20">VLAN 20</span>
-                      </td>
-                      <td>172.24.64.10 - 172.24.71.254</td>
-                    </tr>
-                    <tr>
-                      <td>Base de Données</td>
-                      <td>
-                        <span class="config-badge bg-vlan30">VLAN 30</span>
-                      </td>
-                      <td>172.24.72.10 - 172.24.73.254</td>
-                    </tr>
-                    <tr>
-                      <td>NFS</td>
-                      <td>
-                        <span class="config-badge bg-vlan40">VLAN 40</span>
-                      </td>
-                      <td>172.24.74.10 - 172.24.74.254</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div
-            class="card card-custom h-100 clickable-card"
-            data-bs-toggle="modal"
-            data-bs-target="#vpnConfigModal"
-          >
-            <div class="card-body text-center p-4">
-              <div class="mb-3">
-                <i class="bi bi-shield-lock fs-1 text-primary"></i>
-              </div>
-              <h5 class="card-title">Sécurité & NAT</h5>
-              <p class="card-text text-muted small">
-                Configuration NAT avancée et tunnels VPN IPSec
-              </p>
-              <div class="badge bg-success">4 Tunnels Actifs</div>
-              <div class="mt-3">
-                <small class="text-muted"
-                  >Cliquez pour voir les configurations</small
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="vpnConfigModal"
-          tabindex="-1"
-          aria-labelledby="vpnConfigModalLabel"
-          aria-hidden="true"
-        >
-          <div
-            class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-          >
-            <div class="modal-content">
-              <div class="modal-header bg-dark text-light">
-                <h5 class="modal-title" id="vpnConfigModalLabel">
-                  <i class="bi bi-terminal me-2"></i>Configurations VPN - Tous
-                  les Départements
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div class="alert alert-info mb-3">
-                  <i class="bi bi-info-circle me-2"></i>
-                  Configurations IPSec pour tous les départements avec le
-                  routeur backbone principal
+            .bg-vlan40 {
+                background-color: rgba(230, 126, 34, 0.2);
+                color: #d35400;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"> <i class="bi bi-hdd-network me-2"></i>TechSolutions SARL </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="architecture.html">Architecture</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="configuration.html">Configuration</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Services VM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tests.html">Tests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="commands.html">Commandes</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
 
-                <!-- Tabs for all departments -->
-                <ul
-                  class="nav nav-pills mb-3"
-                  id="vpnConfigTabs"
-                  role="tablist"
-                >
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active"
-                      id="web-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#web"
-                      type="button"
-                      role="tab"
-                    >
-                      RZ1 - Web/Marketing
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="it-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#it"
-                      type="button"
-                      role="tab"
-                    >
-                      RZ2 - IT
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="db-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#db"
-                      type="button"
-                      role="tab"
-                    >
-                      RZ3 - Base de Données
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="nfs-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nfs"
-                      type="button"
-                      role="tab"
-                    >
-                      RZ4 - NFS
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="backbone-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#backbone"
-                      type="button"
-                      role="tab"
-                    >
-                      Backbone Principal
-                    </button>
-                  </li>
-                </ul>
+        <div class="container page-content">
+            <h1 class="section-title">Configuration du Réseau</h1>
 
-                <div class="tab-content" id="vpnConfigTabsContent">
-                  <!-- RZ1 - Web/Marketing -->
-                  <div
-                    class="tab-pane fade show active"
-                    id="web"
-                    role="tabpanel"
-                  >
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="badge bg-info me-2">RZ1</span>
-                      <h6 class="mb-0">
-                        Routeur Web/Marketing - VLAN 10 (172.24.0.0/18)
-                      </h6>
+            <div class="card card-custom">
+                <div class="card-header card-header-custom">
+                    <h3 class="mb-0"><i class="bi bi-router me-2"></i>Plan d'Adressage IP</h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Le plan d'adressage utilise la technique VLSM (Variable Length Subnet Mask) pour une allocation efficace des
+                        adresses IP selon les besoins de chaque département.
+                    </p>
+
+                    <h5 class="mt-4">Configuration des Routeurs</h5>
+                    <div class="table-responsive">
+                        <table class="table table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Routeur</th>
+                                    <th>Interface</th>
+                                    <th>Adresse IP</th>
+                                    <th>Masque</th>
+                                    <th>Réseau</th>
+                                    <th>Area OSPF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>RZ1</strong> (Web)</td>
+                                    <td>FastEthernet0/0</td>
+                                    <td>172.24.0.1</td>
+                                    <td>/18 (255.255.192.0)</td>
+                                    <td>172.24.0.0/18</td>
+                                    <td><span class="config-badge bg-area0">Area 0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RZ2</strong> (IT)</td>
+                                    <td>FastEthernet0/0</td>
+                                    <td>172.24.64.1</td>
+                                    <td>/21 (255.255.248.0)</td>
+                                    <td>172.24.64.0/21</td>
+                                    <td><span class="config-badge bg-area0">Area 0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RZ3</strong> (DB)</td>
+                                    <td>FastEthernet0/0</td>
+                                    <td>172.24.72.1</td>
+                                    <td>/23 (255.255.254.0)</td>
+                                    <td>172.24.72.0/23</td>
+                                    <td><span class="config-badge bg-area0">Area 0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RZ4</strong> (NFS)</td>
+                                    <td>FastEthernet0/0</td>
+                                    <td>172.24.74.1</td>
+                                    <td>/24 (255.255.255.0)</td>
+                                    <td>172.24.74.0/24</td>
+                                    <td><span class="config-badge bg-area0">Area 0</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
-                    <pre
-                      class="bg-dark text-light p-3 rounded"
-                      style="font-size: 0.85rem"
-                    >
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Note :</strong> Tous les routeurs participent à l'area 0 OSPF pour assurer une convergence rapide du
+                        routage.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-custom h-100">
+                        <div class="card-header card-header-custom">
+                            <h4 class="mb-0"><i class="bi bi-hdd-network me-2"></i>DHCP</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Département</th>
+                                            <th>Plage DHCP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Web/Marketing</td>
+
+                                            <td>172.24.0.10 - 172.24.0.254</td>
+                                        </tr>
+                                        <tr>
+                                            <td>IT</td>
+
+                                            <td>172.24.64.10 - 172.24.71.254</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Base de Données</td>
+
+                                            <td>172.24.72.10 - 172.24.73.254</td>
+                                        </tr>
+                                        <tr>
+                                            <td>NFS</td>
+
+                                            <td>172.24.74.10 - 172.24.74.254</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-custom h-100 clickable-card" data-bs-toggle="modal" data-bs-target="#vpnConfigModal">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="bi bi-shield-lock fs-1 text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Sécurité & NAT</h5>
+                            <p class="card-text text-muted small">Configuration NAT avancée et tunnels VPN IPSec</p>
+                            <div class="badge bg-success">4 Tunnels Actifs</div>
+                            <div class="mt-3">
+                                <small class="text-muted">Cliquez pour voir les configurations</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="vpnConfigModal" tabindex="-1" aria-labelledby="vpnConfigModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header bg-dark text-light">
+                                <h5 class="modal-title" id="vpnConfigModalLabel">
+                                    <i class="bi bi-terminal me-2"></i>Configurations VPN - Tous les Départements
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-info mb-3">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Configurations IPSec pour tous les départements avec le routeur backbone principal
+                                </div>
+
+                                <!-- Tabs for all departments -->
+                                <ul class="nav nav-pills mb-3" id="vpnConfigTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="nav-link active"
+                                            id="web-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#web"
+                                            type="button"
+                                            role="tab"
+                                        >
+                                            RZ1 - Web/Marketing
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="nav-link"
+                                            id="it-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#it"
+                                            type="button"
+                                            role="tab"
+                                        >
+                                            RZ2 - IT
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="nav-link"
+                                            id="db-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#db"
+                                            type="button"
+                                            role="tab"
+                                        >
+                                            RZ3 - Base de Données
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="nav-link"
+                                            id="nfs-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#nfs"
+                                            type="button"
+                                            role="tab"
+                                        >
+                                            RZ4 - NFS
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button
+                                            class="nav-link"
+                                            id="backbone-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#backbone"
+                                            type="button"
+                                            role="tab"
+                                        >
+                                            Backbone Principal
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content" id="vpnConfigTabsContent">
+                                    <!-- RZ1 - Web/Marketing -->
+                                    <div class="tab-pane fade show active" id="web" role="tabpanel">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge bg-info me-2">RZ1</span>
+                                            <h6 class="mb-0">Routeur Web/Marketing - (172.24.0.0/18)</h6>
+                                        </div>
+
+                                        <pre class="bg-dark text-light p-3 rounded" style="font-size: 0.85rem">
 <span class="text-info">! Phase 1 — ISAKMP (Chiffrement Web/Marketing)</span>
 crypto isakmp policy 20
  encr aes 256
@@ -518,21 +453,16 @@ ip access-list extended NAT_WEB
  permit ip 172.24.0.0 0.0.63.255 any
 
 ip nat inside source list NAT_WEB interface GigabitEthernet0/0 overload</pre>
-                  </div>
+                                    </div>
 
-                  <!-- RZ2 - IT -->
-                  <div class="tab-pane fade" id="it" role="tabpanel">
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="badge bg-warning me-2">RZ2</span>
-                      <h6 class="mb-0">
-                        Routeur IT - VLAN 20 (172.24.64.0/21)
-                      </h6>
-                    </div>
+                                    <!-- RZ2 - IT -->
+                                    <div class="tab-pane fade" id="it" role="tabpanel">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge bg-warning me-2">RZ2</span>
+                                            <h6 class="mb-0">Routeur IT - (172.24.64.0/21)</h6>
+                                        </div>
 
-                    <pre
-                      class="bg-dark text-light p-3 rounded"
-                      style="font-size: 0.85rem"
-                    >
+                                        <pre class="bg-dark text-light p-3 rounded" style="font-size: 0.85rem">
 <span class="text-info">! Phase 1 — ISAKMP (Chiffrement IT - Sécurité renforcée)</span>
 crypto isakmp policy 30
  encr aes 256
@@ -569,21 +499,16 @@ ip access-list extended NAT_IT
  permit ip 172.24.64.0 0.0.7.255 any
 
 ip nat inside source list NAT_IT interface GigabitEthernet0/0 overload</pre>
-                  </div>
+                                    </div>
 
-                  <!-- RZ3 - Base de Données (existing) -->
-                  <div class="tab-pane fade" id="db" role="tabpanel">
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="badge bg-danger me-2">RZ3</span>
-                      <h6 class="mb-0">
-                        Routeur Base de Données - VLAN 30 (172.24.72.0/23)
-                      </h6>
-                    </div>
+                                    <!-- RZ3 - Base de Données (existing) -->
+                                    <div class="tab-pane fade" id="db" role="tabpanel">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge bg-danger me-2">RZ3</span>
+                                            <h6 class="mb-0">Routeur Base de Données - (172.24.72.0/23)</h6>
+                                        </div>
 
-                    <pre
-                      class="bg-dark text-light p-3 rounded"
-                      style="font-size: 0.85rem"
-                    >
+                                        <pre class="bg-dark text-light p-3 rounded" style="font-size: 0.85rem">
 <span class="text-info">! Phase 1 — ISAKMP</span>
 crypto isakmp policy 10
  encr aes
@@ -620,21 +545,16 @@ ip access-list extended NAT_DB
  permit ip 172.24.72.0 0.0.1.255 any
 
 ip nat inside source list NAT_DB interface FastEthernet0/0 overload</pre>
-                  </div>
+                                    </div>
 
-                  <!-- RZ4 - NFS -->
-                  <div class="tab-pane fade" id="nfs" role="tabpanel">
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="badge bg-danger me-2">RZ4</span>
-                      <h6 class="mb-0">
-                        Routeur NFS - VLAN 40 (172.24.74.0/24)
-                      </h6>
-                    </div>
+                                    <!-- RZ4 - NFS -->
+                                    <div class="tab-pane fade" id="nfs" role="tabpanel">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge bg-danger me-2">RZ4</span>
+                                            <h6 class="mb-0">Routeur NFS - (172.24.74.0/24)</h6>
+                                        </div>
 
-                    <pre
-                      class="bg-dark text-light p-3 rounded"
-                      style="font-size: 0.85rem"
-                    >
+                                        <pre class="bg-dark text-light p-3 rounded" style="font-size: 0.85rem">
 <span class="text-info">! Phase 1 — ISAKMP (Chiffrement NFS - Haut débit)</span>
 crypto isakmp policy 40
  encr aes 128
@@ -671,21 +591,16 @@ ip access-list extended NAT_NFS
  permit ip 172.24.74.0 0.0.0.255 any
 
 ip nat inside source list NAT_NFS interface GigabitEthernet0/0 overload</pre>
-                  </div>
+                                    </div>
 
-                  <!-- Backbone Configuration -->
-                  <div class="tab-pane fade" id="backbone" role="tabpanel">
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="badge bg-dark me-2">BACKBONE</span>
-                      <h6 class="mb-0">
-                        Routeur Principal - Configuration complète des tunnels
-                      </h6>
-                    </div>
+                                    <!-- Backbone Configuration -->
+                                    <div class="tab-pane fade" id="backbone" role="tabpanel">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="badge bg-dark me-2">BACKBONE</span>
+                                            <h6 class="mb-0">Routeur Principal - Configuration complète des tunnels</h6>
+                                        </div>
 
-                    <pre
-                      class="bg-dark text-light p-3 rounded"
-                      style="font-size: 0.85rem"
-                    >
+                                        <pre class="bg-dark text-light p-3 rounded" style="font-size: 0.85rem">
 <span class="text-success">! ================= CONFIGURATION BACKBONE COMPLÈTE =================</span>
 
 <span class="text-info">! Phase 1 — Politiques ISAKMP pour tous les départements</span>
@@ -769,163 +684,130 @@ crypto map CMAP_MASTER 40 ipsec-isakmp
 interface GigabitEthernet0/0
  ip address 203.0.113.53 255.255.255.252
  crypto map CMAP_MASTER</pre>
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
-                <div class="mt-4 p-3 bg-light rounded">
-                  <h6>
-                    <i class="bi bi-lightbulb me-2"></i>Résumé des
-                    configurations par département :
-                  </h6>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <ul class="small mb-0">
-                        <li>
-                          <strong class="text-info">RZ1 - Web/Marketing</strong>
-                          : AES-256/SHA256, Group 14, accès modéré
-                        </li>
-                        <li>
-                          <strong class="text-warning">RZ2 - IT</strong> :
-                          AES-256/SHA512, Group 16, sécurité maximale
-                        </li>
-                      </ul>
+                                <div class="mt-4 p-3 bg-light rounded">
+                                    <h6><i class="bi bi-lightbulb me-2"></i>Résumé des configurations par département :</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul class="small mb-0">
+                                                <li>
+                                                    <strong class="text-info">RZ1 - Web/Marketing</strong>
+                                                    : AES-256/SHA256, Group 14, accès modéré
+                                                </li>
+                                                <li>
+                                                    <strong class="text-warning">RZ2 - IT</strong> : AES-256/SHA512, Group 16, sécurité
+                                                    maximale
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="small mb-0">
+                                                <li>
+                                                    <strong class="text-danger">RZ3 - Base de Données</strong>
+                                                    : AES/SHA, Group 2, accès restreint
+                                                </li>
+                                                <li>
+                                                    <strong class="text-danger">RZ4 - NFS</strong> : AES-128/SHA, Group 5, optimisé
+                                                    performance
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-warning mt-3 mb-0">
+                                        <i class="bi bi-exclamation-triangle me-2"></i>
+                                        <small
+                                            >Les ACLs VPN doivent être symétriques entre les routeurs départementaux et le backbone. Les
+                                            clés pré-partagées doivent être identiques de chaque côté.</small
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-primary" onclick="copyVpnConfig()">
+                                    <i class="bi bi-clipboard me-1"></i>Copier la configuration active
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                      <ul class="small mb-0">
-                        <li>
-                          <strong class="text-danger"
-                            >RZ3 - Base de Données</strong
-                          >
-                          : AES/SHA, Group 2, accès restreint
-                        </li>
-                        <li>
-                          <strong class="text-danger">RZ4 - NFS</strong> :
-                          AES-128/SHA, Group 5, optimisé performance
-                        </li>
-                      </ul>
+                </div>
+            </div>
+
+            <div class="card card-custom mt-4">
+                <div class="card-header card-header-custom">
+                    <h4 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Résumé du Plan d'Adressage</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5>Web/Marketing</h5>
+                                <p class="mb-1">172.24.0.0/18</p>
+                                <small class="text-muted">2046 hôtes disponibles</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5>IT</h5>
+                                <p class="mb-1">172.24.64.0/21</p>
+                                <small class="text-muted">2046 hôtes disponibles</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5>Base de Données</h5>
+                                <p class="mb-1">172.24.72.0/23</p>
+                                <small class="text-muted">510 hôtes disponibles</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5>NFS</h5>
+                                <p class="mb-1">172.24.74.0/24</p>
+                                <small class="text-muted">254 hôtes disponibles</small>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="alert alert-warning mt-3 mb-0">
-                    <i class="bi bi-exclamation-triangle me-2"></i>
-                    <small
-                      >Les ACLs VPN doivent être symétriques entre les routeurs
-                      départementaux et le backbone. Les clés pré-partagées
-                      doivent être identiques de chaque côté.</small
-                    >
-                  </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Fermer
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="copyVpnConfig()"
-                >
-                  <i class="bi bi-clipboard me-1"></i>Copier la configuration
-                  active
-                </button>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <div class="card card-custom mt-4">
-        <div class="card-header card-header-custom">
-          <h4 class="mb-0">
-            <i class="bi bi-diagram-3 me-2"></i>Résumé du Plan d'Adressage
-          </h4>
-        </div>
-        <div class="card-body">
-          <div class="row text-center">
-            <div class="col-md-3 mb-4">
-              <div class="p-3 border rounded bg-light">
-                <h5>Web/Marketing</h5>
-                <div class="config-badge bg-vlan10 d-inline-block mb-2">
-                  VLAN 10
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-hdd-network me-2"></i>TechSolutions SARL</h5>
+                        <p>Infrastructure Réseau & Services</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0">Documentation Interactive</p>
+                        <p class="mb-0">&copy; 2025 Tous droits réservés</p>
+                    </div>
                 </div>
-                <p class="mb-1">172.24.0.0/18</p>
-                <small class="text-muted">2046 hôtes disponibles</small>
-              </div>
             </div>
-            <div class="col-md-3 mb-4">
-              <div class="p-3 border rounded bg-light">
-                <h5>IT</h5>
-                <div class="config-badge bg-vlan20 d-inline-block mb-2">
-                  VLAN 20
-                </div>
-                <p class="mb-1">172.24.64.0/21</p>
-                <small class="text-muted">2046 hôtes disponibles</small>
-              </div>
-            </div>
-            <div class="col-md-3 mb-4">
-              <div class="p-3 border rounded bg-light">
-                <h5>Base de Données</h5>
-                <div class="config-badge bg-vlan30 d-inline-block mb-2">
-                  VLAN 30
-                </div>
-                <p class="mb-1">172.24.72.0/23</p>
-                <small class="text-muted">510 hôtes disponibles</small>
-              </div>
-            </div>
-            <div class="col-md-3 mb-4">
-              <div class="p-3 border rounded bg-light">
-                <h5>NFS</h5>
-                <div class="config-badge bg-vlan40 d-inline-block mb-2">
-                  VLAN 40
-                </div>
-                <p class="mb-1">172.24.74.0/24</p>
-                <small class="text-muted">254 hôtes disponibles</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </footer>
+        <script>
+            function copyVpnConfig() {
+                const activeTab = document.querySelector("#vpnConfigTabsContent .tab-pane.active");
+                const configText = activeTab.querySelector("pre").innerText;
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <h5><i class="bi bi-hdd-network me-2"></i>TechSolutions SARL</h5>
-            <p>Infrastructure Réseau & Services</p>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <p class="mb-0">Documentation Interactive</p>
-            <p class="mb-0">&copy; 2025 Tous droits réservés</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <script>
-      function copyVpnConfig() {
-        const activeTab = document.querySelector(
-          "#vpnConfigTabsContent .tab-pane.active"
-        );
-        const configText = activeTab.querySelector("pre").innerText;
+                navigator.clipboard.writeText(configText).then(() => {
+                    const btn = document.querySelector(".modal-footer .btn-primary");
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copié !';
+                    btn.classList.remove("btn-primary");
+                    btn.classList.add("btn-success");
 
-        navigator.clipboard.writeText(configText).then(() => {
-          const btn = document.querySelector(".modal-footer .btn-primary");
-          const originalHTML = btn.innerHTML;
-          btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copié !';
-          btn.classList.remove("btn-primary");
-          btn.classList.add("btn-success");
-
-          setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.classList.remove("btn-success");
-            btn.classList.add("btn-primary");
-          }, 2000);
-        });
-      }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.classList.remove("btn-success");
+                        btn.classList.add("btn-primary");
+                    }, 2000);
+                });
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>

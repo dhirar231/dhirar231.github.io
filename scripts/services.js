@@ -397,15 +397,7 @@ function showConfig(serviceType) {
       </div>
     </div>
     
-    <div class="info-item">
-      <div class="info-icon">
-        <i class="bi bi-diagram-3"></i>
-      </div>
-      <div class="info-content">
-        <h6>VLAN</h6>
-        <p>${getServiceVLAN(serviceType)}</p>
-      </div>
-    </div>
+    
     
     <div class="info-item">
       <div class="info-icon">
