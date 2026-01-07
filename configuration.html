@@ -13,6 +13,23 @@
       rel="stylesheet"
     />
     <style>
+      .clickable-card {
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .clickable-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .modal-dialog-scrollable .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .nav-pills .nav-link.active {
+        background-color: #0d6efd;
+        color: white !important;
+      }
+
       /* Same CSS as in the main file */
       :root {
         --primary: #2c3e50;
@@ -325,352 +342,495 @@
         </div>
 
         <div class="col-md-6">
-          <div class="card card-custom h-100">
-            <div class="card-header card-header-custom">
-              <h4 class="mb-0">
-                <i class="bi bi-shield-lock me-2"></i>Sécurité et NAT
-              </h4>
-            </div>
-            <div class="card-body">
-              <div class="mb-4">
-                <h5>
-                  <i class="bi bi-router me-2"></i>Configuration NAT Avancée sur
-                  RZ1
-                </h5>
-                <p class="mb-1">
-                  Le routeur RZ1 implémente une architecture NAT (Network
-                  Address Translation) sophistiquée pour sécuriser et optimiser
-                  l'accès Internet de l'ensemble du réseau d'entreprise.
-                </p>
+          <div
+            class="card card-custom h-100 clickable-card"
+            data-bs-toggle="modal"
+            data-bs-target="#vpnConfigModal"
+          >
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <i class="bi bi-shield-lock fs-1 text-primary"></i>
+              </div>
+              <h5 class="card-title">Sécurité & NAT</h5>
+              <p class="card-text text-muted small">
+                Configuration NAT avancée et tunnels VPN IPSec
+              </p>
+              <div class="badge bg-success">4 Tunnels Actifs</div>
+              <div class="mt-3">
                 <small class="text-muted"
-                  >Interface externe: GigabitEthernet0/0 | Pool NAT:
-                  203.0.113.0/28</small
+                  >Cliquez pour voir les configurations</small
                 >
               </div>
+            </div>
+          </div>
+        </div>
 
-              <div class="row">
-                <div class="col-md-6">
-                  <h6>Mécanismes NAT Déployés</h6>
-                  <ul class="list-group list-group-flush mb-3">
-                    <li class="list-group-item d-flex align-items-center">
-                      <div class="me-3">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                      </div>
-                      <div>
-                        <strong>PAT (NAT Overload)</strong><br />
-                        <small
-                          >Multiplexage des sessions sur adresses IP
-                          publiques</small
-                        >
-                      </div>
-                    </li>
-                    <li class="list-group-item d-flex align-items-center">
-                      <div class="me-3">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                      </div>
-                      <div>
-                        <strong>NAT Statique pour Serveurs</strong><br />
-                        <small>Serveurs Web/Marketing et Base de Données</small>
-                      </div>
-                    </li>
-                    <li class="list-group-item d-flex align-items-center">
-                      <div class="me-3">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                      </div>
-                      <div>
-                        <strong>NAT Dynamique par Département</strong><br />
-                        <small>Pools dédiés pour chaque département</small>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div class="col-md-6">
-                  <h6>Architecture VPN Backbone-Départements</h6>
-                  <div class="vpn-config p-3 bg-light rounded">
-                    <div class="d-flex align-items-center mb-2">
-                      <i class="bi bi-shield-check text-primary me-2"></i>
-                      <strong>Tunnels IPSec Site-à-Site</strong>
-                      <span class="badge bg-primary ms-2"
-                        >4 Tunnels Actifs</span
-                      >
-                    </div>
-                    <ul class="small mb-0">
-                      <li>Chiffrement AES-256-GCM pour tous les tunnels</li>
-                      <li>
-                        Authentification pré-partagée unique par département
-                      </li>
-                      <li>DH Group 14 pour échange de clés</li>
-                      <li>MTU ajusté à 1400 pour performance optimale</li>
-                    </ul>
-                  </div>
-                </div>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="vpnConfigModal"
+          tabindex="-1"
+          aria-labelledby="vpnConfigModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content">
+              <div class="modal-header bg-dark text-light">
+                <h5 class="modal-title" id="vpnConfigModalLabel">
+                  <i class="bi bi-terminal me-2"></i>Configurations VPN - Tous
+                  les Départements
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
+              <div class="modal-body">
+                <div class="alert alert-info mb-3">
+                  <i class="bi bi-info-circle me-2"></i>
+                  Configurations IPSec pour tous les départements avec le
+                  routeur backbone principal
+                </div>
 
-              <h6 class="mt-4">
-                <i class="bi bi-funnel me-2"></i>Politiques de Sécurité par
-                Département
-              </h6>
-              <div class="accordion" id="securityAccordion">
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
+                <!-- Tabs for all departments -->
+                <ul
+                  class="nav nav-pills mb-3"
+                  id="vpnConfigTabs"
+                  role="tablist"
+                >
+                  <li class="nav-item" role="presentation">
                     <button
-                      class="accordion-button collapsed"
+                      class="nav-link active"
+                      id="web-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#web"
                       type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseAcl"
+                      role="tab"
                     >
-                      <i class="bi bi-list-check me-2"></i>ACL Départementales
-                      (Extended Access Lists)
+                      RZ1 - Web/Marketing
                     </button>
-                  </h2>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="it-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#it"
+                      type="button"
+                      role="tab"
+                    >
+                      RZ2 - IT
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="db-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#db"
+                      type="button"
+                      role="tab"
+                    >
+                      RZ3 - Base de Données
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="nfs-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#nfs"
+                      type="button"
+                      role="tab"
+                    >
+                      RZ4 - NFS
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="backbone-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#backbone"
+                      type="button"
+                      role="tab"
+                    >
+                      Backbone Principal
+                    </button>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="vpnConfigTabsContent">
+                  <!-- RZ1 - Web/Marketing -->
                   <div
-                    id="collapseAcl"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#securityAccordion"
+                    class="tab-pane fade show active"
+                    id="web"
+                    role="tabpanel"
                   >
-                    <div class="accordion-body small">
-                      <table class="table table-sm table-hover">
-                        <thead>
-                          <tr>
-                            <th>ACL</th>
-                            <th>Département</th>
-                            <th>Politique</th>
-                            <th>Ports Autorisés</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>ACL 110</td>
-                            <td>
-                              <strong>Web/Marketing</strong><br /><span
-                                class="text-muted"
-                                >VLAN 10</span
-                              >
-                            </td>
-                            <td><span class="badge bg-info">Modérée</span></td>
-                            <td>HTTP(80), HTTPS(443), SMTP(25)</td>
-                          </tr>
-                          <tr>
-                            <td>ACL 120</td>
-                            <td>
-                              <strong>IT</strong><br /><span class="text-muted"
-                                >VLAN 20</span
-                              >
-                            </td>
-                            <td>
-                              <span class="badge bg-warning">Restrictive</span>
-                            </td>
-                            <td>SSH(22), HTTPS(443), RDP(3389)</td>
-                          </tr>
-                          <tr>
-                            <td>ACL 130</td>
-                            <td>
-                              <strong>Base de Données</strong><br /><span
-                                class="text-muted"
-                                >VLAN 30</span
-                              >
-                            </td>
-                            <td>
-                              <span class="badge bg-danger">Stricte</span>
-                            </td>
-                            <td>MySQL(3306), PostgreSQL(5432)</td>
-                          </tr>
-                          <tr>
-                            <td>ACL 140</td>
-                            <td>
-                              <strong>NFS</strong><br /><span class="text-muted"
-                                >VLAN 40</span
-                              >
-                            </td>
-                            <td>
-                              <span class="badge bg-danger">Stricte</span>
-                            </td>
-                            <td>NFS(2049), NFS/UDP(2049)</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="badge bg-info me-2">RZ1</span>
+                      <h6 class="mb-0">
+                        Routeur Web/Marketing - VLAN 10 (172.24.0.0/18)
+                      </h6>
                     </div>
+
+                    <pre
+                      class="bg-dark text-light p-3 rounded"
+                      style="font-size: 0.85rem"
+                    >
+<span class="text-info">! Phase 1 — ISAKMP (Chiffrement Web/Marketing)</span>
+crypto isakmp policy 20
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 28800
+
+crypto isakmp key WEBVPN address 203.0.113.53
+
+<span class="text-info">! Phase 2 — IPsec Transform Set</span>
+crypto ipsec transform-set TS_WEB esp-aes 256 esp-sha256-hmac
+ mode tunnel
+
+<span class="text-info">! ACL VPN (Trafic vers/depuis Backbone)</span>
+ip access-list extended VPN_WEB
+ permit ip 172.24.0.0 0.0.63.255 172.24.64.0 0.0.31.255
+
+<span class="text-info">! Crypto Map</span>
+crypto map CMAP_WEB 10 ipsec-isakmp
+ set peer 203.0.113.53
+ set transform-set TS_WEB
+ match address VPN_WEB
+
+<span class="text-info">! Interface WAN</span>
+interface GigabitEthernet0/0
+ ip address 203.0.113.10 255.255.255.252
+ crypto map CMAP_WEB
+ ip nat outside
+
+<span class="text-info">! NAT Exemption pour VPN</span>
+ip access-list extended NAT_WEB
+ deny ip 172.24.0.0 0.0.63.255 172.24.64.0 0.0.31.255
+ permit ip 172.24.0.0 0.0.63.255 any
+
+ip nat inside source list NAT_WEB interface GigabitEthernet0/0 overload</pre>
+                  </div>
+
+                  <!-- RZ2 - IT -->
+                  <div class="tab-pane fade" id="it" role="tabpanel">
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="badge bg-warning me-2">RZ2</span>
+                      <h6 class="mb-0">
+                        Routeur IT - VLAN 20 (172.24.64.0/21)
+                      </h6>
+                    </div>
+
+                    <pre
+                      class="bg-dark text-light p-3 rounded"
+                      style="font-size: 0.85rem"
+                    >
+<span class="text-info">! Phase 1 — ISAKMP (Chiffrement IT - Sécurité renforcée)</span>
+crypto isakmp policy 30
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 16
+ lifetime 14400
+
+crypto isakmp key ITVPN address 203.0.113.53
+
+<span class="text-info">! Phase 2 — IPsec Transform Set</span>
+crypto ipsec transform-set TS_IT esp-aes 256 esp-sha512-hmac
+ mode tunnel
+
+<span class="text-info">! ACL VPN (Accès complet IT)</span>
+ip access-list extended VPN_IT
+ permit ip 172.24.64.0 0.0.7.255 172.24.0.0 0.0.127.255
+
+<span class="text-info">! Crypto Map</span>
+crypto map CMAP_IT 10 ipsec-isakmp
+ set peer 203.0.113.53
+ set transform-set TS_IT
+ match address VPN_IT
+
+<span class="text-info">! Interface WAN</span>
+interface GigabitEthernet0/0
+ ip address 203.0.113.20 255.255.255.252
+ crypto map CMAP_IT
+ ip nat outside
+
+<span class="text-info">! NAT Exemption pour VPN</span>
+ip access-list extended NAT_IT
+ deny ip 172.24.64.0 0.0.7.255 172.24.0.0 0.0.127.255
+ permit ip 172.24.64.0 0.0.7.255 any
+
+ip nat inside source list NAT_IT interface GigabitEthernet0/0 overload</pre>
+                  </div>
+
+                  <!-- RZ3 - Base de Données (existing) -->
+                  <div class="tab-pane fade" id="db" role="tabpanel">
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="badge bg-danger me-2">RZ3</span>
+                      <h6 class="mb-0">
+                        Routeur Base de Données - VLAN 30 (172.24.72.0/23)
+                      </h6>
+                    </div>
+
+                    <pre
+                      class="bg-dark text-light p-3 rounded"
+                      style="font-size: 0.85rem"
+                    >
+<span class="text-info">! Phase 1 — ISAKMP</span>
+crypto isakmp policy 10
+ encr aes
+ hash sha
+ authentication pre-share
+ group 2
+ lifetime 86400
+
+crypto isakmp key DBVPN address 203.0.113.53
+
+<span class="text-info">! Phase 2 — IPsec</span>
+crypto ipsec transform-set TS_DB esp-aes esp-sha-hmac
+ mode tunnel
+
+<span class="text-info">! ACL VPN (trafic intéressant)</span>
+ip access-list extended VPN_DB
+ permit ip 172.24.72.0 0.0.1.255 172.24.74.0 0.0.0.255
+
+<span class="text-info">! Crypto Map</span>
+crypto map CMAP_DB 10 ipsec-isakmp
+ set peer 203.0.113.53
+ set transform-set TS_DB
+ match address VPN_DB
+
+<span class="text-info">! Interface WAN</span>
+interface FastEthernet0/0
+ ip address 203.0.113.54 255.255.255.252
+ crypto map CMAP_DB
+ ip nat outside
+
+<span class="text-info">! NAT Exemption (OBLIGATOIRE)</span>
+ip access-list extended NAT_DB
+ deny ip 172.24.72.0 0.0.1.255 172.24.74.0 0.0.0.255
+ permit ip 172.24.72.0 0.0.1.255 any
+
+ip nat inside source list NAT_DB interface FastEthernet0/0 overload</pre>
+                  </div>
+
+                  <!-- RZ4 - NFS -->
+                  <div class="tab-pane fade" id="nfs" role="tabpanel">
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="badge bg-danger me-2">RZ4</span>
+                      <h6 class="mb-0">
+                        Routeur NFS - VLAN 40 (172.24.74.0/24)
+                      </h6>
+                    </div>
+
+                    <pre
+                      class="bg-dark text-light p-3 rounded"
+                      style="font-size: 0.85rem"
+                    >
+<span class="text-info">! Phase 1 — ISAKMP (Chiffrement NFS - Haut débit)</span>
+crypto isakmp policy 40
+ encr aes 128
+ hash sha
+ authentication pre-share
+ group 5
+ lifetime 43200
+
+crypto isakmp key NFSVPN address 203.0.113.53
+
+<span class="text-info">! Phase 2 — IPsec Transform Set (optimisé pour NFS)</span>
+crypto ipsec transform-set TS_NFS esp-aes esp-sha-hmac
+ mode tunnel
+
+<span class="text-info">! ACL VPN (Accès depuis Base de Données uniquement)</span>
+ip access-list extended VPN_NFS
+ permit ip 172.24.74.0 0.0.0.255 172.24.72.0 0.0.1.255
+
+<span class="text-info">! Crypto Map</span>
+crypto map CMAP_NFS 10 ipsec-isakmp
+ set peer 203.0.113.53
+ set transform-set TS_NFS
+ match address VPN_NFS
+
+<span class="text-info">! Interface WAN</span>
+interface GigabitEthernet0/0
+ ip address 203.0.113.40 255.255.255.252
+ crypto map CMAP_NFS
+ ip nat outside
+
+<span class="text-info">! NAT Exemption</span>
+ip access-list extended NAT_NFS
+ deny ip 172.24.74.0 0.0.0.255 172.24.72.0 0.0.1.255
+ permit ip 172.24.74.0 0.0.0.255 any
+
+ip nat inside source list NAT_NFS interface GigabitEthernet0/0 overload</pre>
+                  </div>
+
+                  <!-- Backbone Configuration -->
+                  <div class="tab-pane fade" id="backbone" role="tabpanel">
+                    <div class="d-flex align-items-center mb-3">
+                      <span class="badge bg-dark me-2">BACKBONE</span>
+                      <h6 class="mb-0">
+                        Routeur Principal - Configuration complète des tunnels
+                      </h6>
+                    </div>
+
+                    <pre
+                      class="bg-dark text-light p-3 rounded"
+                      style="font-size: 0.85rem"
+                    >
+<span class="text-success">! ================= CONFIGURATION BACKBONE COMPLÈTE =================</span>
+
+<span class="text-info">! Phase 1 — Politiques ISAKMP pour tous les départements</span>
+crypto isakmp policy 10
+ encr aes
+ authentication pre-share
+ group 2
+
+crypto isakmp policy 20
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 28800
+
+crypto isakmp policy 30
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 16
+ lifetime 14400
+
+crypto isakmp policy 40
+ encr aes 128
+ hash sha
+ authentication pre-share
+ group 5
+ lifetime 43200
+
+<span class="text-info">! Clés pré-partagées par département</span>
+crypto isakmp key WEBVPN address 203.0.113.10
+crypto isakmp key ITVPN address 203.0.113.20
+crypto isakmp key DBVPN address 203.0.113.54
+crypto isakmp key NFSVPN address 203.0.113.40
+
+<span class="text-info">! Transform Sets par département</span>
+crypto ipsec transform-set TS_WEB esp-aes 256 esp-sha256-hmac
+crypto ipsec transform-set TS_IT esp-aes 256 esp-sha512-hmac
+crypto ipsec transform-set TS_DB esp-aes esp-sha-hmac
+crypto ipsec transform-set TS_NFS esp-aes esp-sha-hmac
+
+<span class="text-info">! ACLs VPN pour chaque département</span>
+<span class="text-warning">! Web/Marketing (RZ1)</span>
+ip access-list extended VPN_WEB
+ permit ip 172.24.64.0 0.0.31.255 172.24.0.0 0.0.63.255
+
+<span class="text-warning">! IT (RZ2)</span>
+ip access-list extended VPN_IT
+ permit ip 172.24.0.0 0.0.127.255 172.24.64.0 0.0.7.255
+
+<span class="text-warning">! Base de Données (RZ3)</span>
+ip access-list extended VPN_DB
+ permit ip 172.24.74.0 0.0.0.255 172.24.72.0 0.0.1.255
+
+<span class="text-warning">! NFS (RZ4)</span>
+ip access-list extended VPN_NFS
+ permit ip 172.24.72.0 0.0.1.255 172.24.74.0 0.0.0.255
+
+<span class="text-info">! Crypto Map Master (tous les tunnels)</span>
+crypto map CMAP_MASTER 10 ipsec-isakmp
+ set peer 203.0.113.10
+ set transform-set TS_WEB
+ match address VPN_WEB
+
+crypto map CMAP_MASTER 20 ipsec-isakmp
+ set peer 203.0.113.20
+ set transform-set TS_IT
+ match address VPN_IT
+
+crypto map CMAP_MASTER 30 ipsec-isakmp
+ set peer 203.0.113.54
+ set transform-set TS_DB
+ match address VPN_DB
+
+crypto map CMAP_MASTER 40 ipsec-isakmp
+ set peer 203.0.113.40
+ set transform-set TS_NFS
+ match address VPN_NFS
+
+<span class="text-info">! Interface WAN Backbone</span>
+interface GigabitEthernet0/0
+ ip address 203.0.113.53 255.255.255.252
+ crypto map CMAP_MASTER</pre>
                   </div>
                 </div>
 
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseVpn"
-                    >
-                      <i class="bi bi-diagram-3 me-2"></i>Topologie VPN
-                      Départementale
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseVpn"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#securityAccordion"
-                  >
-                    <div class="accordion-body small">
-                      <div class="vpn-topology">
-                        <div class="text-center mb-3">
-                          <div class="fw-bold text-primary">
-                            BACKBONE PRINCIPAL
-                          </div>
-                          <div class="text-success">RZ1 (Hub VPN)</div>
-                          <i
-                            class="bi bi-arrow-down text-muted d-block my-2"
-                          ></i>
-                        </div>
-
-                        <div class="row text-center">
-                          <div class="col-md-3 mb-3">
-                            <div class="card border-primary">
-                              <div class="card-body py-2">
-                                <div class="fw-bold">Web/Marketing</div>
-                                <div class="text-muted small">VLAN 10</div>
-                                <div class="mt-1">
-                                  <span class="badge bg-success"
-                                    >VPN Actif</span
-                                  >
-                                  <div class="small">172.24.0.0/18</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="card border-warning">
-                              <div class="card-body py-2">
-                                <div class="fw-bold">IT</div>
-                                <div class="text-muted small">VLAN 20</div>
-                                <div class="mt-1">
-                                  <span class="badge bg-success"
-                                    >VPN Actif</span
-                                  >
-                                  <div class="small">172.24.64.0/21</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="card border-danger">
-                              <div class="card-body py-2">
-                                <div class="fw-bold">Base de Données</div>
-                                <div class="text-muted small">VLAN 30</div>
-                                <div class="mt-1">
-                                  <span class="badge bg-success"
-                                    >VPN Actif</span
-                                  >
-                                  <div class="small">172.24.72.0/23</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <div class="card border-danger">
-                              <div class="card-body py-2">
-                                <div class="fw-bold">NFS</div>
-                                <div class="text-muted small">VLAN 40</div>
-                                <div class="mt-1">
-                                  <span class="badge bg-success"
-                                    >VPN Actif</span
-                                  >
-                                  <div class="small">172.24.74.0/24</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <p class="mt-3 mb-0">
-                          <small
-                            ><i class="bi bi-info-circle me-1"></i>Chaque
-                            département dispose d'un tunnel VPN dédié avec des
-                            politiques de sécurité spécifiques. Les tunnels vers
-                            Base de Données et NFS utilisent un chiffrement
-                            renforcé.</small
+                <div class="mt-4 p-3 bg-light rounded">
+                  <h6>
+                    <i class="bi bi-lightbulb me-2"></i>Résumé des
+                    configurations par département :
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="small mb-0">
+                        <li>
+                          <strong class="text-info">RZ1 - Web/Marketing</strong>
+                          : AES-256/SHA256, Group 14, accès modéré
+                        </li>
+                        <li>
+                          <strong class="text-warning">RZ2 - IT</strong> :
+                          AES-256/SHA512, Group 16, sécurité maximale
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <ul class="small mb-0">
+                        <li>
+                          <strong class="text-danger"
+                            >RZ3 - Base de Données</strong
                           >
-                        </p>
-                      </div>
+                          : AES/SHA, Group 2, accès restreint
+                        </li>
+                        <li>
+                          <strong class="text-danger">RZ4 - NFS</strong> :
+                          AES-128/SHA, Group 5, optimisé performance
+                        </li>
+                      </ul>
                     </div>
+                  </div>
+                  <div class="alert alert-warning mt-3 mb-0">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <small
+                      >Les ACLs VPN doivent être symétriques entre les routeurs
+                      départementaux et le backbone. Les clés pré-partagées
+                      doivent être identiques de chaque côté.</small
+                    >
                   </div>
                 </div>
               </div>
-
-              <div class="row mt-4">
-                <div class="col-md-6">
-                  <div class="alert alert-warning">
-                    <div class="d-flex">
-                      <i class="bi bi-exclamation-triangle me-2 fs-5"></i>
-                      <div>
-                        <strong>Isolation des Départements Sensibles</strong
-                        ><br />
-                        <small
-                          >Les départements Base de Données et NFS ont des accès
-                          restreints. Seul le département IT a un accès
-                          administratif à ces réseaux.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="alert alert-info">
-                    <div class="d-flex">
-                      <i class="bi bi-shuffle me-2 fs-5"></i>
-                      <div>
-                        <strong>Routage Inter-Département</strong><br />
-                        <small
-                          >Le trafic entre départements passe systématiquement
-                          par le backbone central pour inspection et
-                          filtrage.</small
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-3 p-3 bg-dark text-light rounded">
-                <div class="d-flex align-items-center mb-2">
-                  <i class="bi bi-activity me-2"></i>
-                  <h6 class="mb-0">État des Tunnels VPN Départementaux</h6>
-                  <span class="badge bg-success ms-2">4/4 Actifs</span>
-                </div>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="text-center border-end border-secondary">
-                      <div class="text-info small">Web/Marketing</div>
-                      <div class="text-success">● Actif</div>
-                      <div class="text-muted small">48h uptime</div>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center border-end border-secondary">
-                      <div class="text-warning small">IT</div>
-                      <div class="text-success">● Actif</div>
-                      <div class="text-muted small">72h uptime</div>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center border-end border-secondary">
-                      <div class="text-danger small">Base de Données</div>
-                      <div class="text-success">● Actif</div>
-                      <div class="text-muted small">96h uptime</div>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="text-center">
-                      <div class="text-danger small">NFS</div>
-                      <div class="text-success">● Actif</div>
-                      <div class="text-muted small">96h uptime</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-2 small text-center text-muted">
-                  <i class="bi bi-clock-history me-1"></i>Dernière vérification
-                  cryptographique: 05 min
-                </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fermer
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="copyVpnConfig()"
+                >
+                  <i class="bi bi-clipboard me-1"></i>Copier la configuration
+                  active
+                </button>
               </div>
             </div>
           </div>
@@ -744,7 +904,28 @@
         </div>
       </div>
     </footer>
+    <script>
+      function copyVpnConfig() {
+        const activeTab = document.querySelector(
+          "#vpnConfigTabsContent .tab-pane.active"
+        );
+        const configText = activeTab.querySelector("pre").innerText;
 
+        navigator.clipboard.writeText(configText).then(() => {
+          const btn = document.querySelector(".modal-footer .btn-primary");
+          const originalHTML = btn.innerHTML;
+          btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copié !';
+          btn.classList.remove("btn-primary");
+          btn.classList.add("btn-success");
+
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.classList.remove("btn-success");
+            btn.classList.add("btn-primary");
+          }, 2000);
+        });
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
